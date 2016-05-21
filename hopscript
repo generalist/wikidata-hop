@@ -8,10 +8,13 @@ rm working/*
 
 # the script for scraping the HOP site would go here
 # however, it does not need to be run every time
-# for the moment, hop/memberlinks contains a file of extracted link fragments in the form
-# 1386-1421/member/abbot-john
+# when it does, hop/memberlinks contains a file of extracted link fragments in the form
+###### 1386-1421/member/abbot-john
+# grep -v XREF hop/memberlinks > working/templinks
+# will remove all the crossreferences
+# for now, let's use a locally stored copy
 
-grep -v XREF hop/memberlinks > working/templinks
+curl "https://raw.githubusercontent.com/generalist/wikidata-hop/links/links" > working/templinks
 
 # this cleans it up to be unique
 
