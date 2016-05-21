@@ -50,16 +50,16 @@ echo \# queries to Andrew Gray, andrew@generalist.org.uk >> working/report.tsv
 echo \# >> working/report.tsv
 echo \# `cat working/liveids | wc -l` entries on Wikidata - `cut -f 1 working/beacon | sort | uniq | wc -l` people - `cut -f 1 working/beacon-odnb | sort | uniq | wc -l` ODNB - `cut -f 1 working/beacon-npg | sort | uniq | wc -l` NPG - `cut -f 1 working/beacon-emlo | sort | uniq | wc -l` EMLO - `cut -f 1 working/beacon-viaf | sort | uniq | wc -l` VIAF - `cut -f 1 working/beacon-isni | sort | uniq | wc -l` ISNI - `cut -f 1 working/beacon-hansard | sort | uniq | wc -l` Hansard. >> working/report.tsv
 echo \# >> working/report.tsv
-echo \# `grep 1386-1421 working/links | wc -l` of 3246 still unmatched from 1386-1421 >> working/report.tsv
-echo \# `grep 1509-1558 working/links | wc -l` of 2266 still unmatched from 1509-1558 >> working/report.tsv
-echo \# `grep 1558-1603 working/links | wc -l` of 2670 still unmatched from 1558-1603 >> working/report.tsv
-echo \# `grep 1604-1629 working/links | wc -l` of 1755 still unmatched from 1604-1629 >> working/report.tsv
-echo \# `grep 1660-1690 working/links | wc -l` of 2354 still unmatched from 1660-1690 >> working/report.tsv
-echo \# `grep 1715-1754 working/links | wc -l` of 2041 still unmatched from 1715-1754 >> working/report.tsv
-echo \# `grep 1754-1790 working/links | wc -l` of 1966 still unmatched from 1754-1790 >> working/report.tsv
-echo \# `grep 1790-1820 working/links | wc -l` of 2533 still unmatched from 1790-1820 >> working/report.tsv
-echo \# `grep 1820-1832 working/links | wc -l` of 1367 still unmatched from 1820-1832 >> working/report.tsv
-echo \# Overall, `cat working/links | wc -l` of 22181 still unmatched >> working/report.tsv
+echo \# `grep 1386-1421 working/links | wc -l` of `grep 1386-1421 working/templinks | wc -l` still unmatched from 1386-1421 >> working/report.tsv
+echo \# `grep 1509-1558 working/links | wc -l` of `grep 1509-1558 working/templinks | wc -l` still unmatched from 1509-1558 >> working/report.tsv
+echo \# `grep 1558-1603 working/links | wc -l` of `grep 1558-1603 working/templinks | wc -l` still unmatched from 1558-1603 >> working/report.tsv
+echo \# `grep 1604-1629 working/links | wc -l` of `grep 1604-1629 working/templinks | wc -l` still unmatched from 1604-1629 >> working/report.tsv
+echo \# `grep 1660-1690 working/links | wc -l` of `grep 1660-1690 working/templinks | wc -l` still unmatched from 1660-1690 >> working/report.tsv
+echo \# `grep 1715-1754 working/links | wc -l` of `grep 1715-1754 working/templinks | wc -l` still unmatched from 1715-1754 >> working/report.tsv
+echo \# `grep 1754-1790 working/links | wc -l` of `grep 1754-1790 working/templinks | wc -l` still unmatched from 1754-1790 >> working/report.tsv
+echo \# `grep 1790-1820 working/links | wc -l` of `grep 1790-1820 working/templinks | wc -l` still unmatched from 1790-1820 >> working/report.tsv
+echo \# `grep 1820-1832 working/links | wc -l` of `grep 1820-1832 working/templinks | wc -l` still unmatched from 1820-1832 >> working/report.tsv
+echo \# Overall, `cat working/links | wc -l` of `cat working/templinks | wc -l` still unmatched >> working/report.tsv
 echo \# >> working/report.tsv
 echo \# `cut -b 18- working/links | uniq -d | wc -l` still unmatched with identical titles in different periods >> working/report.tsv
 echo \# >> working/report.tsv
