@@ -14,7 +14,7 @@ rm working/*
 # will remove all the crossreferences
 # for now, let's use a locally stored copy
 
-curl "https://raw.githubusercontent.com/generalist/wikidata-hop/links/links" > working/templinks
+curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/links" > working/templinks
 
 # this cleans it up to be unique
 
@@ -82,4 +82,6 @@ cp working/links ~/public_html/wikidata/hop-links.txt
 
 # dump all of this into the public_html directory so as to be readable
 
-rm working/*
+# rm working/*
+
+# comment out for now
