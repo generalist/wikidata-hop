@@ -14,9 +14,10 @@ rm working/*
 # will remove all the crossreferences
 # for now, let's use a locally stored copy
 
-curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/links" > working/templinks
+curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/links" | sed 's/%28/(/g' | sed 's/%29/)/g' | sed 's/%E2%80%99/â€™/g' > working/templinks
 
 # this cleans it up to be unique
+# and standardises all the formatting
 
 curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1614&source=0" | sed 's/||/\t/g' > working/beacon
 
@@ -34,10 +35,10 @@ curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1614&source=2401" |
 cut -f 2 working/beacon | grep -v "#" > working/liveids
 
 grep -Fxvf working/liveids working/templinks > working/unmatchedlinks
-grep -Fxvf working/liveids working/templinks | sed 's/%28/(/g' | sed 's/%29/)/g' | sed 's/%E2%80%99/â€™/g' > working/links1
+grep -Fxvf working/liveids working/templinks > working/links1
 sort -t'/' -V -k3 working/links1 | uniq -u > working/links
 
-# find all lines in templinks not in liveids, then clean them up if needed, and sort by member name (third col after /)
+# find all lines in templinks not in liveids, and sort by member name (third col after /)
 
 # now assemble everything for the export file
 
