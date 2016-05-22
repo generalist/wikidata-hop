@@ -27,6 +27,7 @@ curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1614&source=1802" |
 curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1614&source=214" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-viaf
 curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1614&source=213" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-isni
 curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1614&source=2015" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-hansard
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1614&source=2401" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-sdfb
 
 # get all the properties we're interested in from the BEACON tool
 
@@ -48,7 +49,7 @@ echo \# provided on `date` >> working/report.tsv
 echo \# updated daily at http:\/\/www.generalist.org.uk\/wikidata >> working/report.tsv
 echo \# queries to Andrew Gray, andrew@generalist.org.uk >> working/report.tsv
 echo \# >> working/report.tsv
-echo \# `cat working/liveids | wc -l` entries on Wikidata - `cut -f 1 working/beacon | sort | uniq | wc -l` people - `cut -f 1 working/beacon-odnb | sort | uniq | wc -l` ODNB - `cut -f 1 working/beacon-npg | sort | uniq | wc -l` NPG - `cut -f 1 working/beacon-emlo | sort | uniq | wc -l` EMLO - `cut -f 1 working/beacon-viaf | sort | uniq | wc -l` VIAF - `cut -f 1 working/beacon-isni | sort | uniq | wc -l` ISNI - `cut -f 1 working/beacon-hansard | sort | uniq | wc -l` Hansard. >> working/report.tsv
+echo \# `cat working/liveids | wc -l` entries on Wikidata - `cut -f 1 working/beacon | sort | uniq | wc -l` people - `cut -f 1 working/beacon-odnb | sort | uniq | wc -l` ODNB - `cut -f 1 working/beacon-npg | sort | uniq | wc -l` NPG - `cut -f 1 working/beacon-emlo | sort | uniq | wc -l` EMLO - `cut -f 1 working/beacon-sdfb | sort | uniq | wc -l` SDFB - `cut -f 1 working/beacon-viaf | sort | uniq | wc -l` VIAF - `cut -f 1 working/beacon-isni | sort | uniq | wc -l` ISNI - `cut -f 1 working/beacon-hansard | sort | uniq | wc -l` Hansard. >> working/report.tsv
 echo \# >> working/report.tsv
 echo \# `grep 1386-1421 working/links | wc -l` of `grep 1386-1421 working/templinks | wc -l` still unmatched from 1386-1421 >> working/report.tsv
 echo \# `grep 1509-1558 working/links | wc -l` of `grep 1509-1558 working/templinks | wc -l` still unmatched from 1509-1558 >> working/report.tsv
@@ -65,10 +66,10 @@ echo \# `cut -b 18- working/links | uniq -d | wc -l` still unmatched with identi
 echo \# >> working/report.tsv
 echo \# >> working/report.tsv
 
-echo -e Wikidata ID"\t"HoP matches"\t"OBIN"\t"National Portrait Gallery ID"\t"EMLO"\t"VIAF"\t"ISNI"\t"Hansard"\t"HoP-1"\t"HoP-2"\t"HoP-3 >> working/report.tsv
+echo -e Wikidata ID"\t"HoP matches"\t"Oxford DNB"\t"National Portrait Gallery"\t"Early Modern Letters Online"\t"Six Degrees of Francis Bacon"\t"VIAF"\t"ISNI"\t"Hansard"\t"HoP-1"\t"HoP-2"\t"HoP-3 >> working/report.tsv
 for i in `cat working/allids` ;
 do grep -w $i working/beacon >> working/$i
-echo -e $i"\t"`grep -wc $i working/beacon`"\t"`grep -w $i working/beacon-odnb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-npg | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-emlo | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-viaf | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-isni | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-hansard | cut -f 1 | uniq`"\t"`cut -f2 working/$i | sed -n 1p`"\t"`cut -f2 working/$i | sed -n 2p`"\t"`cut -f2 working/$i | sed -n 3p` >> working/report.tsv ;
+echo -e $i"\t"`grep -wc $i working/beacon`"\t"`grep -w $i working/beacon-odnb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-npg | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-emlo | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-sdfb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-viaf | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-isni | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-hansard | cut -f 1 | uniq`"\t"`cut -f2 working/$i | sed -n 1p`"\t"`cut -f2 working/$i | sed -n 2p`"\t"`cut -f2 working/$i | sed -n 3p` >> working/report.tsv ;
 done
 
 # "| uniq" added to stop multiple entries for eg ODNB when there are two article matches
