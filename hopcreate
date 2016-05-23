@@ -23,13 +23,18 @@ for i in `seq 1 $ENTRIES` ;
 do echo CREATE >> output ;
 echo -e LAST"\t"P31"\t"Q5 >> output ;
 echo -e LAST"\t"P1614"\t"\"`sed "${i}q;d" source.tsv | cut -f 1`\" >> output ;
-echo -e LAST"\t"P39"\t"`sed "${i}q;d" source.tsv | cut -f 2 | sed 's/ENG/Q18018860/' | sed 's/GB/Q18015642/' | sed 's/ENG/Q16707842/' `>> output ;
+echo -e LAST"\t"P39"\t"`sed "${i}q;d" source.tsv | cut -f 2 | sed 's/ENG/Q18018860/' | sed 's/GB/Q18015642/' | sed 's/UK/Q16707842/' `>> output ;
 echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 3`\" >> output; 
 echo -e LAST"\t"P569"\t"+`sed "${i}q;d" source.tsv | cut -f 4`T00\:00\:00Z\/09 | sed 's/+unkT00:00:00Z\/09/\t/' >> output; 
 echo -e LAST"\t"P570"\t"+`sed "${i}q;d" source.tsv | cut -f 5`T00\:00\:00Z\/09 | sed 's/+unkT00:00:00Z\/09/\t/' >> output; 
 echo -e LAST"\t"Den"\t"\"English Member of Parliament\" >> output; 
 done
 
+# still need to do:
+
+# support for unknown dates
+# add dates into description field
+# have description field check for English/British/UK
 
 
 # omit dates for now
