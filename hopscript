@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# this should be run from within the /scripts directory, and uses
+# this should be run from within the /scripts directory
 
 cd ~/scripts
 mkdir -p working
