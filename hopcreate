@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# script for creating new MP entries for Wikidata from HoP items which are known not to exist
+
+# requirement - source.tsv, which includes the following columns:
+# 1 - HoP URL - only one for now
+# 2 - parliamentary body ("UK", "GB", "ENG")
+# 3 - name
+# 4 - born - "unk" unknown
+# 5 - died - "unk" unknown
+
+# it then produces a file suitable to be sent to http://tools.wmflabs.org/wikidata-todo/quick_statements.php
+
+ENTRIES=`cat source.tsv | wc -l`
+
+echo $ENTRIES records to create
+
+rm output
+
+# make sure it's cleaned up from a previous run
+
+for i in `seq 1 $ENTRIES` ; 
+do echo CREATE >> output ;
+echo -e LAST"\t"P1614"\t"`sed "${i}q;d" source.tsv | cut -f 1` >> output ;
+echo -e LAST"\t"P39"\t"`sed "${i}q;d" source.tsv | cut -f 2 | sed 's/ENG/Q18018860/' | sed 's/GB/Q18015642/' | sed 's/ENG/Q16707842/' `>> output ;
+echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 3`\" >> output; 
+done
+
+# omit dates for now
