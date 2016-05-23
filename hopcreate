@@ -6,8 +6,8 @@
 # 1 - HoP URL - only one for now
 # 2 - parliamentary body ("UK", "GB", "ENG")
 # 3 - name
-# 4 - born - "unk" unknown
-# 5 - died - "unk" unknown
+# 4 - born - "unk" unknown - 1800-01-01
+# 5 - died - "unk" unknown - 1800-01-01
 
 # it then produces a file suitable to be sent to http://tools.wmflabs.org/wikidata-todo/quick_statements.php
 
@@ -25,7 +25,11 @@ echo -e LAST"\t"P31"\t"Q5 >> output ;
 echo -e LAST"\t"P1614"\t"\"`sed "${i}q;d" source.tsv | cut -f 1`\" >> output ;
 echo -e LAST"\t"P39"\t"`sed "${i}q;d" source.tsv | cut -f 2 | sed 's/ENG/Q18018860/' | sed 's/GB/Q18015642/' | sed 's/ENG/Q16707842/' `>> output ;
 echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 3`\" >> output; 
-echo -e LAST"\t"Den"\t"\"English MP\" >> output; 
+echo -e LAST"\t"P569"\t"+`sed "${i}q;d" source.tsv | cut -f 4`T00\:00\:00Z\/09 | sed 's/+unkT00:00:00Z\/09/\t/' >> output; 
+echo -e LAST"\t"P570"\t"+`sed "${i}q;d" source.tsv | cut -f 5`T00\:00\:00Z\/09 | sed 's/+unkT00:00:00Z\/09/\t/' >> output; 
+echo -e LAST"\t"Den"\t"\"English Member of Parliament\" >> output; 
 done
+
+
 
 # omit dates for now
