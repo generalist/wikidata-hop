@@ -25,6 +25,7 @@ echo -e LAST"\t"P31"\t"Q5 >> output ;
 echo -e LAST"\t"P1614"\t"`sed "${i}q;d" source.tsv | cut -f 1` >> output ;
 echo -e LAST"\t"P39"\t"`sed "${i}q;d" source.tsv | cut -f 2 | sed 's/ENG/Q18018860/' | sed 's/GB/Q18015642/' | sed 's/ENG/Q16707842/' `>> output ;
 echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 3`\" >> output; 
+echo -e LAST"\t"Den"\t"\"English MP\" >> output; 
 done
 
 # omit dates for now
