@@ -28,7 +28,7 @@ echo -e LAST"\t"P39"\t"`sed "${i}q;d" source.tsv | cut -f 2 | sed 's/ENG/Q180188
 echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 3`\" >> output; 
 echo -e LAST"\t"P569"\t"+`sed "${i}q;d" source.tsv | cut -f 4`\-00\-00T00\:00\:00Z\/09 | sed 's/+unk-00-00T00:00:00Z\/09/no value/' >> output; 
 echo -e LAST"\t"P570"\t"+`sed "${i}q;d" source.tsv | cut -f 5`\-00\-00T00\:00\:00Z\/09 | sed 's/+unk-00-00T00:00:00Z\/09/no value/' >> output; 
-echo -e LAST"\t"Den"\t"\"English Member of Parliament\" >> output; 
+echo -e LAST"\t"Den"\t"\"`sed "${i}q;d" source.tsv | cut -f 2 | sed 's/English/Q18018860/' | sed 's/British/Q18015642/' | sed 's/United Kingdom/Q16707842/' ` Member of Parliament\" >> output; 
 done
 
 # still need to do:
