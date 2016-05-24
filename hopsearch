@@ -1,0 +1,59 @@
+#!/bin/bash
+
+rm output
+rm searchresults
+
+curl "http://www.generalist.org.uk/wikidata/hop-links.txt" > hoplinks.txt
+
+# first find all no-date names (easiest) plus remove any brackets or -i etc; also sir, hon, lord
+# this is really crude, I know, but it is the safest option for now
+
+grep 1386 hoplinks.txt | cut -d / -f 3 | grep -v [0-9] | grep -v [\(\)] | grep -v '\-i'$ | grep -v '\-ii'$ | grep -v '\-iii'$ | grep -v '\-sir\-' | grep -v '\-hon\-' | grep -v '\-lord\-' | sed 's/^/1386-1421\/member\//g' > possiblenames
+
+# note we're only doing 1386-41 (no overlaps!)
+
+# then transform it into slug + name
+
+for i in `cat possiblenames` ; do echo -e $i"\t"\"`echo $i | cut -d / -f 3 | cut -d \- -f 2 | sed 's/^\(.\)/\U\1/'`" "`echo $i | cut -d / -f 3 | cut -d \- -f 1 | sed 's/^\(.\)/\U\1/'`\" >> output ; done
+
+# then search WD for name and see what happens
+
+cut -f 2 output | sed 's/"//g' | sed 's/ /%20/g' > namelist
+
+for i in `cat namelist` ;
+do curl "https://www.wikidata.org/w/api.php?action=wbsearchentities&search="$i"&language=en&format=json" > curlhit ;
+cat curlhit;
+if [ "`cat curlhit | grep concepturi`" ]
+then
+echo -e $i"\t"RESULTS | sed 's/%20/ /g' >> searchresults ;
+echo $i hits ;
+else
+echo -e $i"\t"BLANK | sed 's/%20/ /g' >> searchresults ;
+echo $i blank ;
+fi
+sleep 2s ;
+rm curlhit ;
+done
+
+rm noentries
+rm noentries-slugs
+
+grep RESULTS searchresults  | cut -f 1 | sed 's/^/"/g' | sed 's/$/"/g' > found
+grep BLANK searchresults  | cut -f 1 | sed 's/^/"/g' | sed 's/$/"/g' > noentries
+grep -Fvf found output | sed 's/"//g' > noentries-slugs
+
+wc -l noentries
+wc -l noentries-slugs
+
+# this gives us just the slugs + names
+# need to add ENG, unk, unk (all English + unknown dates)
+
+rm pastefooter
+
+counter=`cat noentries-slugs | wc -l`
+
+for i in `seq 1 $counter` ; do echo -e "ENG\tunk\tunk" >> pastefooter ; done
+
+paste noentries-slugs pastefooter > source.tsv
+
+# now ready to feed it in!
