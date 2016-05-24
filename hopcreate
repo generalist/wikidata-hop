@@ -15,24 +15,24 @@ ENTRIES=`cat source.tsv | wc -l`
 
 echo $ENTRIES records to create
 
-rm output
+rm quickstatements
 
 # make sure it's cleaned up from a previous run
 
 for i in `seq 1 $ENTRIES` ; 
-do echo CREATE >> output ;
-echo -e LAST"\t"P31"\t"Q5 >> output ;
-echo -e LAST"\t"P21"\t"Q6581097 >> output ; # note this is hardcoded - all HoP entries are male!
-echo -e LAST"\t"P1614"\t"\"`sed "${i}q;d" source.tsv | cut -f 1`\" >> output ;
-echo -e LAST"\t"P39"\t"`sed "${i}q;d" source.tsv | cut -f 3 | sed 's/ENG/Q18018860/' | sed 's/GB/Q18015642/' | sed 's/UK/Q16707842/' `>> output ;
-echo -e LAST"\t"P569"\t"+`sed "${i}q;d" source.tsv | cut -f 4`\-00\-00T00\:00\:00Z\/09 | sed 's/+unk-00-00T00:00:00Z\/09/no value/' >> output; 
-echo -e LAST"\t"P570"\t"+`sed "${i}q;d" source.tsv | cut -f 5`\-00\-00T00\:00\:00Z\/09 | sed 's/+unk-00-00T00:00:00Z\/09/no value/' >> output; 
-echo -e LAST"\t"Den"\t"\"`sed "${i}q;d" source.tsv | cut -f 3 | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament\" >> output; 
+do echo CREATE >> quickstatements ;
+echo -e LAST"\t"P31"\t"Q5 >> quickstatements ;
+echo -e LAST"\t"P21"\t"Q6581097 >> quickstatements ; # note this is hardcoded - all HoP entries are male!
+echo -e LAST"\t"P1614"\t"\"`sed "${i}q;d" source.tsv | cut -f 1`\" >> quickstatements ;
+echo -e LAST"\t"P39"\t"`sed "${i}q;d" source.tsv | cut -f 3 | sed 's/ENG/Q18018860/' | sed 's/GB/Q18015642/' | sed 's/UK/Q16707842/' `>> quickstatements ;
+echo -e LAST"\t"P569"\t"+`sed "${i}q;d" source.tsv | cut -f 4`\-00\-00T00\:00\:00Z\/09 | sed 's/+unk-00-00T00:00:00Z\/09/no value/' >> quickstatements; 
+echo -e LAST"\t"P570"\t"+`sed "${i}q;d" source.tsv | cut -f 5`\-00\-00T00\:00\:00Z\/09 | sed 's/+unk-00-00T00:00:00Z\/09/no value/' >> quickstatements; 
+echo -e LAST"\t"Den"\t"\"`sed "${i}q;d" source.tsv | cut -f 3 | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament\" >> quickstatements; 
 NAME=`sed "${i}q;d" source.tsv | cut -f 2`
 if [ -z "`sed "${i}q;d" source.tsv | cut -f 2`" ] ; then
-echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 1 | cut -d / -f 3 | cut -d \- -f 2 | sed 's/^\(.\)/\U\1/'` `sed "${i}q;d" source.tsv | cut -f 1 | cut -d / -f 3 | cut -d \- -f 1 | sed 's/^\(.\)/\U\1/'`\" >> output;
+echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 1 | cut -d / -f 3 | cut -d \- -f 2 | sed 's/^\(.\)/\U\1/'` `sed "${i}q;d" source.tsv | cut -f 1 | cut -d / -f 3 | cut -d \- -f 1 | sed 's/^\(.\)/\U\1/'`\" >> quickstatements;
 else
-echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 2`\" >> output; 
+echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 2`\" >> quickstatements; 
 fi
 done
 
