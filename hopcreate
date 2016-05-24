@@ -25,18 +25,24 @@ echo -e LAST"\t"P31"\t"Q5 >> output ;
 echo -e LAST"\t"P21"\t"Q6581097 >> output ; # note this is hardcoded - all HoP entries are male!
 echo -e LAST"\t"P1614"\t"\"`sed "${i}q;d" source.tsv | cut -f 1`\" >> output ;
 echo -e LAST"\t"P39"\t"`sed "${i}q;d" source.tsv | cut -f 3 | sed 's/ENG/Q18018860/' | sed 's/GB/Q18015642/' | sed 's/UK/Q16707842/' `>> output ;
-echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 2\" >> output; 
 echo -e LAST"\t"P569"\t"+`sed "${i}q;d" source.tsv | cut -f 4`\-00\-00T00\:00\:00Z\/09 | sed 's/+unk-00-00T00:00:00Z\/09/no value/' >> output; 
 echo -e LAST"\t"P570"\t"+`sed "${i}q;d" source.tsv | cut -f 5`\-00\-00T00\:00\:00Z\/09 | sed 's/+unk-00-00T00:00:00Z\/09/no value/' >> output; 
 echo -e LAST"\t"Den"\t"\"`sed "${i}q;d" source.tsv | cut -f 3 | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament\" >> output; 
+NAME=`sed "${i}q;d" source.tsv | cut -f 2`
+if [ -z "`sed "${i}q;d" source.tsv | cut -f 2`" ] ; then
+echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 1 | cut -d / -f 3 | cut -d \- -f 2 | sed 's/^\(.\)/\U\1/'` `sed "${i}q;d" source.tsv | cut -f 1 | cut -d / -f 3 | cut -d \- -f 1 | sed 's/^\(.\)/\U\1/'`\" >> output;
+else
+echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 2`\" >> output; 
+fi
 done
+
 
 # still need to do:
 
 # support for unknown dates - "no value" doesn't currently do anything
 # support for dates more precise than "year"
 # add dates into description field
-# have description field check for English/British/UK
+
 
 # demo line for testing: 
 # 1386-1421/member/abbotsley-john	ENG	John Abbotsley	unk	unk
