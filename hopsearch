@@ -6,11 +6,11 @@ rm searchresults
 curl "http://www.generalist.org.uk/wikidata/hop-links.txt" > hoplinks.txt
 
 # first find all no-date names (easiest) plus remove any brackets or -i etc; also sir, hon, lord
-# this is really crude, I know, but it is the safest option for now
+# this is really crude, but it avoids all the difficult edge cases
 
 grep 1386 hoplinks.txt | cut -d / -f 3 | grep -v [0-9] | grep -v [\(\)] | grep -v '\-i'$ | grep -v '\-ii'$ | grep -v '\-iii'$ | grep -v '\-sir\-' | grep -v '\-hon\-' | grep -v '\-lord\-' | sed 's/^/1386-1421\/member\//g' > possiblenames
 
-# note we're only doing 1386-41 (no overlaps!)
+# note we're only doing 1386-41 (no overlaps possible from this period!)
 
 # then transform it into slug + name
 
@@ -34,6 +34,9 @@ fi
 sleep 2s ;
 rm curlhit ;
 done
+
+# basically, if *any* matches appear for the name, we treat this as a possible match without looking any further
+# and thus only upload the names which are confirmed unique
 
 rm noentries
 rm noentries-slugs
