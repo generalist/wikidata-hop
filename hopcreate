@@ -37,7 +37,6 @@ echo -e LAST"\t"P570"\t"+`sed "${i}q;d" source.tsv | cut -f 5`\-00\-00T00\:00\:0
 else
 echo -e LAST"\t"P570"\t"+`sed "${i}q;d" source.tsv | cut -f 5`T00\:00\:00Z\/11 >> quickstatements; 
 fi
-echo -e LAST"\t"P570"\t"+`sed "${i}q;d" source.tsv | cut -f 5`\-00\-00T00\:00\:00Z\/09 | sed 's/+unk-00-00T00:00:00Z\/09/no value/' >> quickstatements; 
 echo -e LAST"\t"Den"\t"\"`sed "${i}q;d" source.tsv | cut -f 3 | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament\" >> quickstatements; 
 NAME=`sed "${i}q;d" source.tsv | cut -f 2`
 if [ -z "`sed "${i}q;d" source.tsv | cut -f 2`" ] ; then
