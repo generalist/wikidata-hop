@@ -8,6 +8,8 @@
 # 3 - parliamentary body ("UK", "GB", "ENG")
 # 4 - born - "unk" unknown - 1800 (no day support yet)
 # 5 - died - "unk" unknown - 1800 (no day support yet)
+# 6 - second HoP URL if present
+# 7 - third HoP URL if present
 
 # it then produces a file suitable to be sent to http://tools.wmflabs.org/wikidata-todo/quick_statements.php
 
@@ -33,6 +35,12 @@ if [ -z "`sed "${i}q;d" source.tsv | cut -f 2`" ] ; then
 echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 1 | cut -d / -f 3 | cut -d \- -f 2 | sed 's/^\(.\)/\U\1/'` `sed "${i}q;d" source.tsv | cut -f 1 | cut -d / -f 3 | cut -d \- -f 1 | sed 's/^\(.\)/\U\1/'`\" >> quickstatements;
 else
 echo -e LAST"\t"Len"\t"\"`sed "${i}q;d" source.tsv | cut -f 2`\" >> quickstatements; 
+fi
+if [ -n "`sed "${i}q;d" source.tsv | cut -f 6`" ] ; then
+echo -e LAST"\t"P1614"\t"\"`sed "${i}q;d" source.tsv | cut -f 6`\" >> quickstatements ;
+fi
+if [ -n "`sed "${i}q;d" source.tsv | cut -f 7`" ] ; then
+echo -e LAST"\t"P1614"\t"\"`sed "${i}q;d" source.tsv | cut -f 7`\" >> quickstatements ;
 fi
 done
 
