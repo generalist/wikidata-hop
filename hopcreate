@@ -52,6 +52,7 @@ echo -e LAST"\t"P1614"\t"\"`sed "${i}q;d" source.tsv | cut -f 7`\" >> quickstate
 fi
 done
 
+# note that the name guessing code only works for the simplest case - /smith-john, no dates
 
 # still need to do:
 
