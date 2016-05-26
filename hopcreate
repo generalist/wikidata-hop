@@ -57,15 +57,15 @@ if [ -z $BORN ] ; then # if no born date
   echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament\" >> quickstatements; 
   # no dates at all
   else
-  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament (died "$DIED")\" >> quickstatements; 
+  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament \(died "$DIED"\)\" >> quickstatements; 
   # death only
   fi
 else # ie we have a born date
   if [ -z $DIED ] ; then # if no died date
-  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament (born "$BORN")\" >> quickstatements; 
+  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament \(born "$BORN"\)\" >> quickstatements; 
   # born only
   else
-  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament ("$BORN"-"$DIED")\" >> quickstatements; 
+  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament \("$BORN"-"$DIED"\)\" >> quickstatements; 
   # both dates
   fi
 fi
