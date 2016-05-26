@@ -26,7 +26,12 @@ do sed "${i}q;d" source.tsv > extract ; # this puts the relevant line into a tem
 NAME=`cut -f 2 extract` ;
 BORN=`cut -f 4 extract | cut -b 1-4 | sed 's/unk//'` ;
 DIED=`cut -f 5 extract | cut -b 1-4 | sed 's/unk//'` ;
-
+if [ `cut -f 3 extract | grep ENG` ] ; 
+then ADJECTIVE="English" ;
+else ADJECTIVE="British" ;
+fi
+# set adjective to English if served in an English parliament, otherwise British. Not great for Wales but otherwise fine.
+# Will mean some post-Union MPs are 'English' not 'British' but this is reasonable
 
 echo CREATE >> quickstatements ;
 echo -e LAST"\t"P31"\t"Q5 >> quickstatements ;
@@ -67,18 +72,18 @@ echo -e LAST"\t"P1614"\t"\"`cut -f 7 extract`\" >> quickstatements ;
 fi
 if [ -z $BORN ] ; then # if no born date
   if [ -z $DIED ] ; then # if no died date
-  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament\" >> quickstatements; 
+  echo -e LAST"\t"Den"\t"\""$ADJECTIVE" Member of Parliament\" >> quickstatements; 
   # no dates at all
   else
-  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament \(died "$DIED"\)\" >> quickstatements; 
+  echo -e LAST"\t"Den"\t"\""$ADJECTIVE" Member of Parliament \(died "$DIED"\)\" >> quickstatements; 
   # death only
   fi
 else # ie we have a born date
   if [ -z $DIED ] ; then # if no died date
-  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament \(born "$BORN"\)\" >> quickstatements; 
+  echo -e LAST"\t"Den"\t"\""$ADJECTIVE" Member of Parliament \(born "$BORN"\)\" >> quickstatements; 
   # born only
   else
-  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament \("$BORN"-"$DIED"\)\" >> quickstatements; 
+  echo -e LAST"\t"Den"\t"\""$ADJECTIVE" Member of Parliament \("$BORN"-"$DIED"\)\" >> quickstatements; 
   # both dates
   fi
 fi
