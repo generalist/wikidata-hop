@@ -61,7 +61,4 @@ rm extract
 
 # support for unknown dates - "no value" doesn't currently do anything
 # add dates into description field
-
-
-# demo line for testing: 
-# 1386-1421/member/abbotsley-john   John Abbotsle	ENG	unk	unk
+# support ENG/GB or GB/UK
