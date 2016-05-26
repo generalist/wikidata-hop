@@ -38,8 +38,7 @@ echo -e LAST"\t"P570"\t"+`cut -f 5 extract`\-00\-00T00\:00\:00Z\/09 | sed 's/+un
 else
 echo -e LAST"\t"P570"\t"+`cut -f 5 extract`T00\:00\:00Z\/11 >> quickstatements; 
 fi
-echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament\" >> quickstatements; 
-NAME=`cut -f 2 extract`
+NAME=`cut -f 2 extract` ;
 if [ -z "`cut -f 2 extract`" ] ; then
 echo -e LAST"\t"Len"\t"\"`cut -f 1 extract | cut -d / -f 3 | cut -d \- -f 2 | sed 's/^\(.\)/\U\1/'` `cut -f 1 extract | cut -d / -f 3 | cut -d \- -f 1 | sed 's/^\(.\)/\U\1/'`\" >> quickstatements;
 else
@@ -50,6 +49,25 @@ echo -e LAST"\t"P1614"\t"\"`cut -f 6 extract`\" >> quickstatements ;
 fi
 if [ -n "`cut -f 7 extract`" ] ; then
 echo -e LAST"\t"P1614"\t"\"`cut -f 7 extract`\" >> quickstatements ;
+fi
+BORN=`cut -f 4 extract | cut -b 1-4 | sed 's/unk//'` ;
+DIED=`cut -f 5 extract | cut -b 1-4 | sed 's/unk//'` ;
+if [ -z $BORN ] ; then # if no born date
+  if [ -z $DIED ] ; then # if no died date
+  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament\" >> quickstatements; 
+  # no dates at all
+  else
+  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament (died "$DIED")\" >> quickstatements; 
+  # death only
+  fi
+else # ie we have a born date
+  if [ -z $DIED ] ; then # if no died date
+  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament (born "$BORN")\" >> quickstatements; 
+  # born only
+  else
+  echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament ("$BORN"-"$DIED")\" >> quickstatements; 
+  # both dates
+  fi
 fi
 done
 
