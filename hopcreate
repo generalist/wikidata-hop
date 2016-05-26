@@ -33,15 +33,15 @@ echo -e LAST"\t"P31"\t"Q5 >> quickstatements ;
 echo -e LAST"\t"P21"\t"Q6581097 >> quickstatements ; # note this is hardcoded - all HoP entries are male!
 echo -e LAST"\t"P1614"\t"\"`cut -f 1 extract`\" >> quickstatements ;
 if [ `cut -f 3 extract | grep ENG` ] ; then
-echo -e LAST"\t"P39"\t"Q18018860 ; fi
+echo -e LAST"\t"P39"\t"Q18018860 >> quickstatements ; fi
 if [ `cut -f 3 extract | grep GB` ] ; then
-echo -e LAST"\t"P39"\t"Q18015642 ; fi
+echo -e LAST"\t"P39"\t"Q18015642 >> quickstatements ; fi
 if [ `cut -f 3 extract | grep UK` ] ; then
-echo -e LAST"\t"P39"\t"Q16707842 ; fi
+echo -e LAST"\t"P39"\t"Q16707842 >> quickstatements ; fi
 if [ `cut -f 3 extract | grep IRE` ] ; then
-echo -e LAST"\t"P39"\t"Q18019039 ; fi
+echo -e LAST"\t"P39"\t"Q18019039 >> quickstatements ; fi
 if [ `cut -f 3 extract | grep SCO` ] ; then
-echo -e LAST"\t"P39"\t"Q18928999 ; fi
+echo -e LAST"\t"P39"\t"Q18928999 >> quickstatements ; fi
 # ie, create a P39 for each valid parliamentary type; also includes Ireland and Scotland, for the sake of it
 echo -e LAST"\t"P39"\t"`cut -f 3 extract | sed 's/ENG/Q18018860/' | sed 's/GB/Q18015642/' | sed 's/UK/Q16707842/' `>> quickstatements ;
 if [ -z "`cut -f 4 extract | grep \-`" ] ; then #this if loop sees if it has a hyphen, ie is day or just year
