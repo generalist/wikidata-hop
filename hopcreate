@@ -5,7 +5,7 @@
 # requirement - source.tsv, which includes the following columns:
 # 1 - HoP URL - only one for now
 # 2 - name (if blank, will guess)
-# 3 - parliamentary body ("UK", "GB", "ENG")
+# 3 - parliamentary body ("UK", "GB", "ENG"), plus IRE & SCO for pre-union parliaments
 # 4 - born - "unk" unknown - 1800 (no day support yet)
 # 5 - died - "unk" unknown - 1800 (no day support yet)
 # 6 - second HoP URL if present
@@ -23,10 +23,26 @@ rm quickstatements
 
 for i in `seq 1 $ENTRIES` ; 
 do sed "${i}q;d" source.tsv > extract ; # this puts the relevant line into a temp file to save looking it up each time
+NAME=`cut -f 2 extract` ;
+BORN=`cut -f 4 extract | cut -b 1-4 | sed 's/unk//'` ;
+DIED=`cut -f 5 extract | cut -b 1-4 | sed 's/unk//'` ;
+
+
 echo CREATE >> quickstatements ;
 echo -e LAST"\t"P31"\t"Q5 >> quickstatements ;
 echo -e LAST"\t"P21"\t"Q6581097 >> quickstatements ; # note this is hardcoded - all HoP entries are male!
 echo -e LAST"\t"P1614"\t"\"`cut -f 1 extract`\" >> quickstatements ;
+if [ `cut -f 3 extract | grep ENG` ] ; then
+echo -e LAST"\t"P39"\t"Q18018860 ; fi
+if [ `cut -f 3 extract | grep GB` ] ; then
+echo -e LAST"\t"P39"\t"Q18015642 ; fi
+if [ `cut -f 3 extract | grep UK` ] ; then
+echo -e LAST"\t"P39"\t"Q16707842 ; fi
+if [ `cut -f 3 extract | grep IRE` ] ; then
+echo -e LAST"\t"P39"\t"Q18019039 ; fi
+if [ `cut -f 3 extract | grep SCO` ] ; then
+echo -e LAST"\t"P39"\t"Q18928999 ; fi
+# ie, create a P39 for each valid parliamentary type; also includes Ireland and Scotland, for the sake of it
 echo -e LAST"\t"P39"\t"`cut -f 3 extract | sed 's/ENG/Q18018860/' | sed 's/GB/Q18015642/' | sed 's/UK/Q16707842/' `>> quickstatements ;
 if [ -z "`cut -f 4 extract | grep \-`" ] ; then #this if loop sees if it has a hyphen, ie is day or just year
 echo -e LAST"\t"P569"\t"+`cut -f 4 extract`\-00\-00T00\:00\:00Z\/09 | sed 's/+unk-00-00T00:00:00Z\/09/no value/' >> quickstatements; 
@@ -38,7 +54,6 @@ echo -e LAST"\t"P570"\t"+`cut -f 5 extract`\-00\-00T00\:00\:00Z\/09 | sed 's/+un
 else
 echo -e LAST"\t"P570"\t"+`cut -f 5 extract`T00\:00\:00Z\/11 >> quickstatements; 
 fi
-NAME=`cut -f 2 extract` ;
 if [ -z "`cut -f 2 extract`" ] ; then
 echo -e LAST"\t"Len"\t"\"`cut -f 1 extract | cut -d / -f 3 | cut -d \- -f 2 | sed 's/^\(.\)/\U\1/'` `cut -f 1 extract | cut -d / -f 3 | cut -d \- -f 1 | sed 's/^\(.\)/\U\1/'`\" >> quickstatements;
 else
@@ -50,8 +65,6 @@ fi
 if [ -n "`cut -f 7 extract`" ] ; then
 echo -e LAST"\t"P1614"\t"\"`cut -f 7 extract`\" >> quickstatements ;
 fi
-BORN=`cut -f 4 extract | cut -b 1-4 | sed 's/unk//'` ;
-DIED=`cut -f 5 extract | cut -b 1-4 | sed 's/unk//'` ;
 if [ -z $BORN ] ; then # if no born date
   if [ -z $DIED ] ; then # if no died date
   echo -e LAST"\t"Den"\t"\"`cut -f 3 extract | sed 's/ENG/English/' | sed 's/GB/British/' | sed 's/UK/United Kingdom/' ` Member of Parliament\" >> quickstatements; 
