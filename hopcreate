@@ -43,7 +43,7 @@ echo -e LAST"\t"P39"\t"Q18019039 >> quickstatements ; fi
 if [ `cut -f 3 extract | grep SCO` ] ; then
 echo -e LAST"\t"P39"\t"Q18928999 >> quickstatements ; fi
 # ie, create a P39 for each valid parliamentary type; also includes Ireland and Scotland, for the sake of it
-echo -e LAST"\t"P39"\t"`cut -f 3 extract | sed 's/ENG/Q18018860/' | sed 's/GB/Q18015642/' | sed 's/UK/Q16707842/' `>> quickstatements ;
+
 if [ -z "`cut -f 4 extract | grep \-`" ] ; then #this if loop sees if it has a hyphen, ie is day or just year
 echo -e LAST"\t"P569"\t"+`cut -f 4 extract`\-00\-00T00\:00\:00Z\/09 | sed 's/+unk-00-00T00:00:00Z\/09/no value/' >> quickstatements; 
 else
