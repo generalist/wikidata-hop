@@ -57,6 +57,7 @@ echo \# `grep 1509-1558 working/links | wc -l` of `grep 1509-1558 working/templi
 echo \# `grep 1558-1603 working/links | wc -l` of `grep 1558-1603 working/templinks | wc -l` still unmatched from 1558-1603 >> working/report.tsv
 echo \# `grep 1604-1629 working/links | wc -l` of `grep 1604-1629 working/templinks | wc -l` still unmatched from 1604-1629 >> working/report.tsv
 echo \# `grep 1660-1690 working/links | wc -l` of `grep 1660-1690 working/templinks | wc -l` still unmatched from 1660-1690 >> working/report.tsv
+echo \# `grep 1660-1690 working/links | wc -l` of `grep 1690-1715 working/templinks | wc -l` still unmatched from 1690-1715 >> working/report.tsv
 echo \# `grep 1715-1754 working/links | wc -l` of `grep 1715-1754 working/templinks | wc -l` still unmatched from 1715-1754 >> working/report.tsv
 echo \# `grep 1754-1790 working/links | wc -l` of `grep 1754-1790 working/templinks | wc -l` still unmatched from 1754-1790 >> working/report.tsv
 echo \# `grep 1790-1820 working/links | wc -l` of `grep 1790-1820 working/templinks | wc -l` still unmatched from 1790-1820 >> working/report.tsv
