@@ -23,6 +23,7 @@ rm quickstatements
 
 for i in `seq 1 $ENTRIES` ; 
 do sed "${i}q;d" source.tsv > extract ; # this puts the relevant line into a temp file to save looking it up each time
+SLUG=`cut -f 1 extract` ;
 NAME=`cut -f 2 extract` ;
 BORN=`cut -f 4 extract | cut -b 1-4 | sed 's/unk//'` ;
 DIED=`cut -f 5 extract | cut -b 1-4 | sed 's/unk//'` ;
@@ -34,7 +35,7 @@ fi
 # Will mean some post-Union MPs are 'English' not 'British' but this is reasonable
 
 echo CREATE >> quickstatements ;
-echo -e LAST"\t"P31"\t"Q5 >> quickstatements ;
+echo -e LAST"\t"P31"\t"Q5"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ;
 echo -e LAST"\t"P21"\t"Q6581097 >> quickstatements ; # note this is hardcoded - all HoP entries are male!
 echo -e LAST"\t"P1614"\t"\"`cut -f 1 extract`\" >> quickstatements ;
 if [ `cut -f 3 extract | grep ENG` ] ; then
