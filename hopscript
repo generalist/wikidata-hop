@@ -82,10 +82,6 @@ done
 # and then reads off lines 1,2,3 (and failing that, blank tabs) - this means we
 # can handle entities with multiple values
 
-# this is a quick report to find all the people who died after 1800 for Charles to work with
-
-grep "\-18..$" working/links > ~/public_html/wikidata/1800slist.tsv
-
 cp working/report.tsv ~/public_html/wikidata/hop-report.tsv
 cp working/links ~/public_html/wikidata/hop-links.txt
 
