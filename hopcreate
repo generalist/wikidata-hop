@@ -64,7 +64,7 @@ echo -e LAST"\t"P27"\t"Q230791"\t"S854"\t""\"http://www.historyofparliamentonlin
 # ie, create a P39 for each valid parliamentary type; also includes Ireland and Scotland, for the sake of it
 # also creates a nationality line - this is not absolutely perfect and will miss some edge cases, but better than nothing
 
-#now dates, this bit is v. complex
+#now dates, this bit is complex
 
 if [ -z "`cut -f 4 extract | grep \-`" ] ; then #this if loop sees if it has a hyphen, ie is day or just year
 echo -e LAST"\t"P569"\t"+`cut -f 4 extract`\-00\-00T00\:00\:00Z\/09 | sed 's/+unk-00-00T00:00:00Z\/09/no value/' >> quickstatements; 
@@ -76,17 +76,22 @@ echo -e LAST"\t"P570"\t"+`cut -f 5 extract`\-00\-00T00\:00\:00Z\/09 | sed 's/+un
 else
 echo -e LAST"\t"P570"\t"+`cut -f 5 extract`T00\:00\:00Z\/11 >> quickstatements; 
 fi
+
+# I do not quite remember what this does but it appears to check for a name and bash up one out of the slug if not present
+# may as well leave it in
 if [ -z "`cut -f 2 extract`" ] ; then
 echo -e LAST"\t"Len"\t"\"`cut -f 1 extract | cut -d / -f 3 | cut -d \- -f 2 | sed 's/^\(.\)/\U\1/'` `cut -f 1 extract | cut -d / -f 3 | cut -d \- -f 1 | sed 's/^\(.\)/\U\1/'`\" >> quickstatements;
 else
 echo -e LAST"\t"Len"\t"\"`cut -f 2 extract`\" >> quickstatements; 
 fi
+# now the alternate slugs
 if [ -n "`cut -f 6 extract`" ] ; then
 echo -e LAST"\t"P1614"\t"\"`cut -f 6 extract`\" >> quickstatements ;
 fi
 if [ -n "`cut -f 7 extract`" ] ; then
 echo -e LAST"\t"P1614"\t"\"`cut -f 7 extract`\" >> quickstatements ;
 fi
+# now the description field, all v clever
 if [ -z $BORN ] ; then # if no born date
   if [ -z $DIED ] ; then # if no died date
   echo -e LAST"\t"Den"\t"\""$ADJECTIVE" Member of Parliament\" >> quickstatements; 
