@@ -43,26 +43,28 @@ echo -e LAST"\t"P21"\t"Q6581097"\t"S854"\t""\"http://www.historyofparliamentonli
 echo -e LAST"\t"P1614"\t"\"$SLUG\" >> quickstatements ;
 # was this person English? (to 1707)
 if [ `cut -f 3 extract | grep ENG` ] ; then
-echo -e LAST"\t"P39"\t"Q18018860 >> quickstatements ; 
-echo -e LAST"\t"P27"\t"Q179876 >> quickstatements ; fi
+echo -e LAST"\t"P39"\t"Q18018860"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ; 
+echo -e LAST"\t"P27"\t"Q179876"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ; fi
 # was this person British? (1707-1801)
 if [ `cut -f 3 extract | grep GB` ] ; then
-echo -e LAST"\t"P39"\t"Q18015642 >> quickstatements ; 
-echo -e LAST"\t"P27"\t"Q161885 >> quickstatements ; fi
+echo -e LAST"\t"P39"\t"Q18015642"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ; 
+echo -e LAST"\t"P27"\t"Q161885"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ; fi
 # was this person from the UK? (1801 onwards)
 if [ `cut -f 3 extract | grep UK` ] ; then
 echo -e LAST"\t"P39"\t"Q16707842"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ; 
 echo -e LAST"\t"P27"\t"Q174193"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ; fi
 # was this person from Ireland? (to 1801)
 if [ `cut -f 3 extract | grep IRE` ] ; then
-echo -e LAST"\t"P39"\t"Q18019039 >> quickstatements ; 
-echo -e LAST"\t"P27"\t"Q215530 >> quickstatements ; fi
+echo -e LAST"\t"P39"\t"Q18019039"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ; 
+echo -e LAST"\t"P27"\t"Q215530"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ; fi
 # was this person Scottish? (to 1707)
 if [ `cut -f 3 extract | grep SCO` ] ; then
-echo -e LAST"\t"P39"\t"Q18928999 >> quickstatements ; 
-echo -e LAST"\t"P27"\t"Q230791 >> quickstatements ; fi
+echo -e LAST"\t"P39"\t"Q18928999"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ; 
+echo -e LAST"\t"P27"\t"Q230791"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ; fi
 # ie, create a P39 for each valid parliamentary type; also includes Ireland and Scotland, for the sake of it
 # also creates a nationality line - this is not absolutely perfect and will miss some edge cases, but better than nothing
+
+#now dates, this bit is v. complex
 
 if [ -z "`cut -f 4 extract | grep \-`" ] ; then #this if loop sees if it has a hyphen, ie is day or just year
 echo -e LAST"\t"P569"\t"+`cut -f 4 extract`\-00\-00T00\:00\:00Z\/09 | sed 's/+unk-00-00T00:00:00Z\/09/no value/' >> quickstatements; 
