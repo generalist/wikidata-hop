@@ -36,7 +36,7 @@ fi
 
 echo CREATE >> quickstatements ;
 # this is a person
-echo -e LAST"\t"P31"\t"Q5"\t"S143"\t"Q7739799"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ;
+echo -e LAST"\t"P31"\t"Q5"\t"S248"\t"Q7739799"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ;
 # this person is a man (they all were)
 echo -e LAST"\t"P21"\t"Q6581097"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ;
 # this is the primary HoP identity
