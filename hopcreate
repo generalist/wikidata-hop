@@ -39,8 +39,11 @@ fi
 # Will mean some post-Union MPs are 'English' not 'British' but this is reasonable
 
 echo CREATE >> quickstatements ;
+# is a person
 echo -e LAST"\t"P31"\t"Q5 >> quickstatements ;
+# is a man
 echo -e LAST"\t"P21"\t"Q6581097"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ; # note this is hardcoded - all HoP entries are male!
+# has this HOP url
 echo -e LAST"\t"P1614"\t"\"`cut -f 1 extract`\" >> quickstatements ;
 if [ `cut -f 3 extract | grep ENG` ] ; then
 echo -e LAST"\t"P39"\t"Q18018860"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"$SLUG\" >> quickstatements ; 
@@ -75,12 +78,18 @@ echo -e LAST"\t"Len"\t"\"`cut -f 1 extract | cut -d / -f 3 | cut -d \- -f 2 | se
 else
 echo -e LAST"\t"Len"\t"\"`cut -f 2 extract`\" >> quickstatements; 
 fi
+
+# more HOP links if present
+
 if [ -n "`cut -f 6 extract`" ] ; then
 echo -e LAST"\t"P1614"\t"\"`cut -f 6 extract`\" >> quickstatements ;
 fi
 if [ -n "`cut -f 7 extract`" ] ; then
 echo -e LAST"\t"P1614"\t"\"`cut -f 7 extract`\" >> quickstatements ;
 fi
+
+#now do the description, including birth and death dates
+
 if [ -z $BORN ] ; then # if no born date
   if [ -z $DIED ] ; then # if no died date
   echo -e LAST"\t"Den"\t"\""$ADJECTIVE" Member of Parliament\" >> quickstatements; 
