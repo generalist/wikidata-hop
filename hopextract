@@ -22,7 +22,7 @@ echo "1754-1790" >> working/period
 echo "1790-1820" >> working/period
 echo "1820-1832" >> working/period
 
-# first of all, let's do this across all MPs, ever
+# let's do this across all MPs, ever
 
 rm educated
 
