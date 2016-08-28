@@ -43,4 +43,29 @@ grep "Eton" educated > working/school-eton # Q192088
 grep "Harrow" educated > working/school-harrow # Q1247373
 grep "Rugby" educated > working/school-rugby # Q1143281
 grep "Westminster" educated > working/school-westminster # Q1341516
+grep "Winchester" educated > working/school-winchester # Q1059517
+
+# now the colleges/universities
+
+grep "Christ Church, Oxf" educated > working/coll-cc-ox # Q745967
+# lots more Oxbridge to do, but these are very inconsistent - lots of variation
+
+grep "Edinburgh Univ" educated > working/uni-edi # Q160302
+grep "Glasgow Univ" educated > working/uni-gla # Q192775
+grep "Aberdeen Univ" educated > working/uni-aber # Q270532
+grep "St. Andrews Univ" educated > working/uni-stan # Q216273
+grep "Trinity, Dublin" educated > working/uni-tcd # Q258464
+
+# and the Inns
+
+grep "Trinity, Dublin" educated > working/uni-tcd # Q258464
+grep "Trinity, Dublin" educated > working/uni-tcd # Q258464
+
+M. Temple
+I. Temple
+L. Inn
+L.Inn
+King’s Inn # Q2069586
+G. Inn
+
 
