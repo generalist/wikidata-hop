@@ -4,6 +4,11 @@
 
 # nb this needs them all in a handy directory at eg 1386-1421/member/xyz.html
 
+# uses pup - https://github.com/ericchiang/pup
+
+# refresh with 
+# curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/hopextract" > hopextract
+
 rm working/*
 
 echo "1386-1421" > working/period
