@@ -26,7 +26,7 @@ echo "1820-1832" >> working/period
 
 rm educated
 
-for j in `cat period` ; do
+for j in `cat working/period` ; do
 
 # produce a raw list of the educated section
 
