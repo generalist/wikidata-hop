@@ -37,6 +37,7 @@ for i in `ls $j/member/*.html` ; do echo -e $i "\t" `cat $i | pup --color | grep
 done
 
 # pull out the schools (just schools for now as proof of concept)
+# drop them into single text files for now so that they can be manually reviewed
 
 grep "Eton" educated > working/school-eton # Q192088
 grep "Harrow" educated > working/school-harrow # Q1247373
@@ -67,12 +68,32 @@ grep "King's Inn" educated >> working/inn-king # Q2069586
 
 # now we have a lot of extracted people, we can build an index and upload away
 
-curl "http://www.generalist.org.uk/wikidata/hop-report.tsv" > working/report
+# constrained as ONLY ETON for now
+
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1614&source=0" | sed 's/||/\t/g' > working/beacon
+
+for i in `cat working/school-eton | cut -f 1 | sed 's/.html//g'` ; do grep $i working/beacon >> working/list-eton ; done
+
+# list of all Q-ids and corresponding slugs for etonians
+
+# now find only one for each - the use of tail is to ensure it's the later volume as standard (consistent with other uses)
+
+for i in `cat working/list-eton | cut -f 1 | sort | uniq` ; do grep $i working/list-eton | tail -n 1 >> working/trimmedlist-eton ; done
+
+# now build the QuickStatements line
+# for now, this only uses a simple referenceURL cite
+
+rm quickstatements
+
+for i in `cat working/trimmedlist-eton` ; do
+
+echo -e `echo $i | cut -f 1`"\t"P69"\t"Q192088"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"`echo $i | cut -f 2`\" >> quickstatements ;
+
+done
 
 
 
 
 
 
-
-
+# important - this will need SOME KIND of do-not-duplicate check before being used - we don't want to keep spamming in the same statements, with or without references
