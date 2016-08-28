@@ -11,19 +11,18 @@
 
 rm working/*
 
-#echo "1386-1421" > working/period
-#echo "1509-1558" >> working/period
-#echo "1558-1603" >> working/period
-#echo "1604-1629" >> working/period
-#echo "1660-1690" >> working/period
-#echo "1690-1715" >> working/period
-#echo "1715-1754" >> working/period
-#echo "1754-1790" >> working/period
+echo "1386-1421" > working/period
+echo "1509-1558" >> working/period
+echo "1558-1603" >> working/period
+echo "1604-1629" >> working/period
+echo "1660-1690" >> working/period
+echo "1690-1715" >> working/period
+echo "1715-1754" >> working/period
+echo "1754-1790" >> working/period
 echo "1790-1820" >> working/period
 echo "1820-1832" >> working/period
 
 # let's do this across all MPs, ever
-# however, comment it out to only the completed ones for now
 
 rm educated
 
