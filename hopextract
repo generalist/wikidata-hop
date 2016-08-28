@@ -57,8 +57,8 @@ grep "Trinity, Dublin" educated > working/uni-tcd # Q258464
 
 # and the Inns
 
-grep "M. Temple" educated > working/temple-m # Q925942
-grep "I. Temple" educated > working/temple-i # Q1233784
+grep "M. Temple" educated > working/inn-m-temple # Q925942
+grep "I. Temple" educated > working/inn-i-temple # Q1233784
 grep "L. Inn" educated > working/inn-l # Q69482
 grep "L.Inn" educated >> working/inn-l # Q69482 
 grep "G. Inn" educated > working/inn-g # Q157412
@@ -66,6 +66,9 @@ grep "King’s Inn" educated > working/inn-king # Q2069586
 grep "King's Inn" educated >> working/inn-king # Q2069586
 
 # now we have a lot of extracted people, we can build an index and upload away
+
+curl "http://www.generalist.org.uk/wikidata/hop-report.tsv" > working/report
+
 
 
 
