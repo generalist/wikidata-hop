@@ -85,15 +85,9 @@ for i in `cat working/list-eton | cut -f 1 | sort | uniq` ; do grep $i working/l
 
 rm quickstatements
 
-for i in `cat working/trimmedlist-eton` ; do
-
-echo -e `echo $i | cut -f 1`"\t"P69"\t"Q192088"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"`echo $i | cut -f 2`\" >> quickstatements ;
-
-done
+for i in `cat working/trimmedlist-eton | cut -f 1` ; do echo -e $i"\t"P69"\t"Q192088"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"`grep $i working/trimmedlist-eton | cut -f 2`\" >> quickstatements ; done
 
 
-
-
-
-
-# important - this will need SOME KIND of do-not-duplicate check before being used - we don't want to keep spamming in the same statements, with or without references
+# QuickStatements is pretty smart - if the claim exists but has no reference, it will simply add the reference
+# if it exists with a different reference, it will add another one
+# this means we could even cite it to every HOP entry, but that would be overkill, let's leave in the one-only rule :-)
