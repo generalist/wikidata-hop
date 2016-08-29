@@ -21,6 +21,8 @@ curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1614&source=0" | se
 cut -f 1 working/beacon | sort | uniq > working/onwiki-qids
 cut -f 2 working/beacon | sort > working/onwiki-slugs
 
+curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/institutions.tsv" > working/institutions.tsv
+
 # for each member that exists onwiki, extract the 'educated' section
 
 for i in `cat working/onwiki-slugs` ; do 
@@ -35,6 +37,16 @@ done
 # here is a quick-and-dirty overview to highlight the most important ones to import
 
 cut -f 2 working/educated | sed 's/;/\t/g' | sed 's/\t/\n/g' | sed 's/ [0-9]/\t/g' | sed 's/ c./\t/g' | sed 's/^ //g' | sed 's/^\. //g' | cut -f 1 | sed 's/ $//g' | sed 's/\.$//g'| sed 's/,$//g' | sort | uniq -c | sort -rn > working/rawnumbers
+for i in `cat working/institutions.tsv | cut -f 1` ; do grep "`grep $i working/institutions.tsv | cut -f 2`" working/rawnumbers >> working/scratch ; done
+cat working/scratch | sort | uniq | sort -rn > working/rawmatched
+grep -vf working/rawmatched working/rawnumbers > working/rawunmatched
+
+# in other words... 
+# rawnumbers - overall crudely-deduplicated report
+# rawmatched - number that will be matched by one of the dedicated regexps
+# rawunmatched - number that is not matched by a regexp
+
+
 
 
 # pull out the schools (just schools for now as proof of concept)
