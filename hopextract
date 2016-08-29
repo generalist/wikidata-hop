@@ -9,16 +9,28 @@
 # refresh with 
 # curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/hopextract" > hopextract
 
+# tidy up from previous runs
+
 rm working/*
 rm educated
 
-# produce a raw list of the educated section
+# import some useful stuff
+
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1614&source=0" | sed 's/||/\t/g' | grep -v \# > working/beacon
+
+cut -f 1 working/beacon | sort | uniq > working/onwiki-qids
+cut -f 2 working/beacon | sort > working/onwiki-slugs
+
+# for each member that exists onwiki, extract the 'educated' section
 
 for i in `ls */member/*.html` ; do 
-echo -e $i "\t" `cat $i | pup --color | grep -A 2 "educ$" | tail -1` >> educated ;
-echo -e $i "\t" `cat $i | pup --color | grep -A 2 "educ.$" | tail -1` >> educated ;
+echo -e $i "\t" `cat $i.html | pup --color | grep -A 2 "educ$" | tail -1` >> educated ;
+echo -e $i "\t" `cat $i.html | pup --color | grep -A 2 "educ.$" | tail -1` >> educated ;
 done
+
 # these are the two forms used
+# it will produce a lot of blank superfluous sections, but eh, not a major problem
+# they'll be ignored by the following searches
 
 
 
@@ -56,9 +68,8 @@ grep "King's Inn" educated >> working/inn-king # Q2069586
 
 # constrained as ONLY ETON for now
 
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1614&source=0" | sed 's/||/\t/g' > working/beacon
 
-for i in `cat working/school-eton | cut -f 1 | sed 's/.html//g'` ; do grep $i working/beacon >> working/list-eton ; done
+for i in `cat working/school-eton | cut -f 1` ; do grep $i working/beacon >> working/list-eton ; done
 
 # list of all Q-ids and corresponding slugs for etonians
 
@@ -77,3 +88,4 @@ for i in `cat working/trimmedlist-eton | cut -f 1` ; do echo -e $i"\t"P69"\t"Q19
 # QuickStatements is pretty smart - if the claim exists but has no reference, it will simply add the reference
 # if it exists with a different reference, it will add another one
 # this means we could even cite it to every HOP entry, but that would be overkill, let's leave in the one-only rule :-)
+
