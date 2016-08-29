@@ -5,6 +5,8 @@ cam-emmanuel	Emmanuel, Cam	Q797892
 cam-johns1	St. John’s, Cam	Q691283
 cam-johns2	St. John's, Cam	Q691283
 cam-kings1	King’s, Cam	Q924289
+cam-kings2	King’s Coll. Cam	Q924289
+cam-kings3	King’s Cam	Q924289
 cam-queens1	Queens’, Cam	Q765642
 cam-queens2	Queen’s, Cam	Q765642
 cam-queens3	Queens, Cam	Q765642
@@ -15,6 +17,7 @@ cam-trin4	Trin. Coll. Cam	Q332342
 cam-trin5	Trin., Cam	Q332342
 cam-trin6	Trinity, Cam	Q332342
 cam-trinhall	Trinity Hall, Cam	Q1244704
+cam-caius	Caius, Cam	Q863940
 inn-gray1	G. Inn	Q157412
 inn-gray2	G.Inn	Q157412
 inn-itemple1	I. Temple	Q1233784
@@ -38,7 +41,11 @@ oxf-chch3	Ch.Ch. Ox	Q745967
 oxf-chch4	Ch Ch. Ox	Q745967
 oxf-chch5	C.C.C. Ox	Q745967
 oxf-magd1	Magdalen, Ox	Q81162
+oxf-magd2	Magdalen Coll. Ox	Q81162
 oxf-new1	New Coll. Ox	Q1376987
+oxf-jes1	Jesus, Ox	Q81174
+oxf-mer1	Merton, Ox	Q82513
+oxf-ccc1	Corpus, Ox	Q1135137
 oxf-johns1	St. John’s, Ox	Q609646
 oxf-wad1	Wadham, Ox	Q2537765
 school-chart	Charterhouse	Q1067870
@@ -64,3 +71,5 @@ uni-glasgow	Glasgow Univ	Q192775
 uni-standrews	St. Andrews Univ	Q216273
 uni-trinity1	Trinity, Dublin	Q258464
 uni-trinity2	Trinity Coll. Dublin	Q258464
+uni-leyden1	Leyden	Q156598
+uni-leyden2	Leiden	Q156598
