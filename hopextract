@@ -46,43 +46,16 @@ grep -vf working/rawmatched working/rawnumbers > working/rawunmatched
 # rawmatched - number that will be matched by one of the dedicated regexps
 # rawunmatched - number that is not matched by a regexp
 
+# an interesting problem to consider - how to avoid, eg, Brasenose matching "privately by... fellow of Brasenose"
 
 
 
-# pull out the schools (just schools for now as proof of concept)
-# drop them into single text files for now so that they can be manually reviewed
+
+##### proof of concept below
 
 grep "Eton" working/educated > working/school-eton # Q192088
-grep "Harrow" working/educated > working/school-harrow # Q1247373
-grep "Rugby" working/educated > working/school-rugby # Q1143281
-grep "Westminster" working/educated > working/school-westminster # Q1341516
-grep "Winchester" working/educated > working/school-winchester # Q1059517
-
-# now the colleges/universities
-
-grep "Christ Church, Oxf" working/educated > working/coll-cc-ox # Q745967
-# lots more Oxbridge to do, but these are very inconsistent - lots of variation
-
-grep "Edinburgh Univ" working/educated > working/uni-edi # Q160302
-grep "Glasgow Univ" working/educated > working/uni-gla # Q192775
-grep "Aberdeen Univ" working/educated > working/uni-aber # Q270532
-grep "St. Andrews Univ" working/educated > working/uni-stan # Q216273
-grep "Trinity, Dublin" working/educated > working/uni-tcd # Q258464
-
-# and the Inns
-
-grep "M. Temple" working/educated > working/inn-m-temple # Q925942
-grep "I. Temple" working/educated > working/inn-i-temple # Q1233784
-grep "L. Inn" working/educated > working/inn-l # Q69482
-grep "L.Inn" working/educated >> working/inn-l # Q69482 
-grep "G. Inn" working/educated > working/inn-g # Q157412
-grep "King’s Inn" working/educated > working/inn-king # Q2069586
-grep "King's Inn" working/educated >> working/inn-king # Q2069586
 
 # now we have a lot of extracted people, we can build an index and upload away
-
-# constrained as ONLY ETON for now
-
 
 for i in `cat working/school-eton | cut -f 1` ; do grep $i working/beacon >> working/list-eton ; done
 
@@ -95,9 +68,7 @@ for i in `cat working/list-eton | cut -f 1 | sort | uniq` ; do grep $i working/l
 # now build the QuickStatements line
 # for now, this only uses a simple referenceURL cite
 
-
 for i in `cat working/trimmedlist-eton | cut -f 1` ; do echo -e $i"\t"P69"\t"Q192088"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"`grep $i working/trimmedlist-eton | cut -f 2`\" >> quickstatements ; done
-
 
 # QuickStatements is pretty smart - if the claim exists but has no reference, it will simply add the reference
 # if it exists with a different reference, it will add another one
