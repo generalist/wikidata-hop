@@ -25,12 +25,12 @@ oxf-chch4	Ch Ch. Ox	Q745967
 oxf-chch4	C.C.C. Ox	Q745967
 cam-trin1	Trinity Coll. Camb	
 cam-trin2	Trinity Coll., Camb	
-cam-trin3	Trin. Camb	
-cam-trin4	Trin. Coll. Camb
-cam-trin5	Trin., Camb	
-cam-johns1	St. John[’]s, Camb
-misc-tour1	[Gg]rand [Tt]our
-misc-tour2	[Ee]uropean [Tt]our
-misc-tour4	Italian [Tt]our
-misc-tour5	[Nn]orthern [Tt]our
-misc-tour6	[Ff]oreign [Tt]our
+cam-trin3	Trin. Camb	Q332342
+cam-trin4	Trin. Coll. Camb  Q332342
+cam-trin5	Trin., Camb	Q332342
+cam-johns1	St. John[.]s, Camb  Q691283
+misc-tour1	[Gg]rand [Tt]our  Q6682302
+misc-tour2	[Ee]uropean [Tt]our  Q6682302
+misc-tour4	Italian [Tt]our  Q6682302
+misc-tour5	[Nn]orthern [Tt]our  Q6682302
+misc-tour6	[Ff]oreign [Tt]our  Q6682302
