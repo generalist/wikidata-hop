@@ -9,3 +9,5 @@ Daily outputs are available at http://www.generalist.org.uk/wikidata
 The `hopcreate` script takes a preformatted TSV file of missing entries and generates a file to upload via QuickStatements 
 
 The `hopsearch` script takes a basic list of missing URLs, guesses names, and tries to find out if they're already in Wikidata
+
+The `hopextract` script processes the HTML files looking for certain things (eg place of education)
