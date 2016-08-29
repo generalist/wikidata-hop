@@ -17,19 +17,22 @@ inn-lincoln1	L. Inn	Q69482
 inn-lincoln2	L.Inn	Q69482
 inn-gray1	G. Inn	Q157412
 inn-gray2	G.Inn	Q157412
-inn-king	King[.]s Inn	Q2069586
+inn-king1	King’s Inn	Q2069586
+inn-king2	King's Inn	Q2069586
 oxf-chch1	Christ Church, Ox	Q745967
 oxf-chch2	Ch. Ch. Ox	Q745967
 oxf-chch3	Ch.Ch. Ox	Q745967
 oxf-chch4	Ch Ch. Ox	Q745967
 oxf-chch4	C.C.C. Ox	Q745967
 cam-emmanuel	Emmanuel, Cam	Q797892
-oxf-queens1	Queen[.]s, Ox	Q73094
+oxf-queens1	Queen’s, Ox	Q73094
+oxf-queens2	Queen's, Ox	Q73094
 oxf-brase	Brasenose	Q899030
 oxf-brase2	B.N.C. Oxf	Q899030
 oxf-magd	Magdalen, Ox	Q81162
 oxf-oriel1	Oriel, Ox	Q81170
-cam-christs	Christ[.]s, Cam	Q714717
+cam-christ1	Christ’s, Cam	Q714717
+cam-christ2	Christ's, Cam	Q714717
 cam-clare	Clare, Cam	Q760967
 cam-trinhall	Trinity Hall, Cam	Q1244704
 oxf-univ1	Univ. Coll. Ox	Q81087
@@ -40,9 +43,10 @@ cam-trin3	Trin. Cam	Q332342
 cam-trin4	Trin. Coll. Cam  Q332342
 cam-trin5	Trin., Cam	Q332342
 cam-trin6	Trinity, Cam	Q332342
-cam-johns1	St. John[.]s, Camb  Q691283
-misc-tour1	[Gg]rand [Tt]our  Q6682302
-misc-tour2	[Ee]uropean [Tt]our  Q6682302
-misc-tour4	Italian [Tt]our  Q6682302
-misc-tour5	[Nn]orthern [Tt]our  Q6682302
-misc-tour6	[Ff]oreign [Tt]our  Q6682302
+cam-johns1	St. John’s, Camb  Q691283
+cam-johns2	St. John's, Camb  Q691283
+misc-tour1	Grand tour  Q6682302
+misc-tour2	European tour  Q6682302
+misc-tour4	Italian tour  Q6682302
+misc-tour5	Northern tour  Q6682302
+misc-tour6	Foreign tour  Q6682302
