@@ -23,7 +23,7 @@ cut -f 2 working/beacon | sort > working/onwiki-slugs
 
 # for each member that exists onwiki, extract the 'educated' section
 
-for i in `ls */member/*.html` ; do 
+for i in `cat working/onwiki-slugs` ; do 
 echo -e $i "\t" `cat $i.html | pup --color | grep -A 2 "educ$" | tail -1` >> educated ;
 echo -e $i "\t" `cat $i.html | pup --color | grep -A 2 "educ.$" | tail -1` >> educated ;
 done
