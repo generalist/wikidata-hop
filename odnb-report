@@ -47,15 +47,20 @@ echo \# >> working/report.tsv
 echo -e Wikidata ID"\t"Oxford DNB"\t"National Portrait Gallery"\t"Early Modern Letters Online"\t"Six Degrees of Francis Bacon"\t"VIAF"\t"ISNI"\t"Hansard"\t"Dictionary of NZ Biography"\t"Australian Dictionary of Biography"\t"HoP-1"\t"HoP-2"\t"HoP-3 >> working/report.tsv
 for i in `cat working/allitems` ;
 do
-grep -w $i working/beacon-hop >> working/hop-$i
-echo -e $i"\t"`grep -wc $i working/beacon | cut -f 1`"\t"`grep -w $i working/beacon | cut -f 2 | uniq`"\t"`grep -w $i working/beacon-npg | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-emlo | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-sdfb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-viaf | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-isni | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-hansard | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-dnzb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-audb | cut -f 1 | uniq`"\t"`cut -f2 working/$i | sed -n 1p`"\t"`cut -f2 working/$i | sed -n 2p`"\t"`cut -f2 working/$i | sed -n 3p` >> working/report.tsv ;
+echo -e $i"\t"`grep -wc $i working/beacon | cut -f 1`"\t"`grep -w $i working/beacon | cut -f 2 | uniq`"\t"`grep -w $i working/beacon-npg | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-emlo | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-sdfb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-viaf | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-isni | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-hansard | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-dnzb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-audb | cut -f 1 | uniq` >> working/report.tsv ;
+
 done
 
 # "| uniq" added to stop multiple entries when there are two article matches
 
+# grep -w $i working/beacon-hop >> working/hop-$i
+# then in the main line
+# "\t"`cut -f2 working/$i | sed -n 1p`"\t"`cut -f2 working/$i | sed -n 2p`"\t"`cut -f2 working/$i | sed -n 3p` 
+# 
 # this last bit takes all the HoP entries, dumps them to one file per q-number,
 # and then reads off lines 1,2,3 (and failing that, blank tabs) - this means we
 # can handle entities with multiple values
+# commented out for now because my god it's hungry - takes ages to run.
 
 #cp working/report.tsv ~/public_html/wikidata/odnb-report.tsv
 
