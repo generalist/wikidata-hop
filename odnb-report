@@ -69,10 +69,10 @@ done
 # can handle entities with multiple values
 # commented out for now because my god it's hungry - takes ages to run.
 
-#cp working/report.tsv ~/public_html/wikidata/odnb-report.tsv
+cp working/report.tsv ~/public_html/wikidata/odnb-report.tsv
 
 # dump all of this into the public_html directory so as to be readable
 
-# rm working/*
+rm working/*
 
 # comment out for now
