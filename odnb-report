@@ -58,7 +58,7 @@ echo -e Wikidata ID"\t"Oxford DNB"\t"National Portrait Gallery"\t"Early Modern L
 for i in `cat working/allitems` ;
 do
 grep -w $i working/beacon-hop >> working/hop-$i ;
-echo -e $i"\t"`grep -w $i working/beacon | cut -f 2 | uniq`"\t"`grep -w $i working/beacon-npg | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-emlo | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-sdfb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-viaf | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-isni | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-hansard | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-dnzb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-audb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-dcb | cut -f 1 | uniq`"\t"`if grep --quiet -w $i working/list-frs; then echo yes; fi`"\t"`cut -f2 working/hop-$i | sed -n 1p`"\t"`cut -f2 working/hop-$i | sed -n 2p`"\t"`cut -f2 working/hop-$i | sed -n 3p` >> working/report.tsv ;
+echo -e $i"\t"`grep -w $i working/beacon | cut -f 2 | uniq`"\t"`grep -w $i working/beacon-npg | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-emlo | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-sdfb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-viaf | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-isni | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-hansard | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-dnzb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-audb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-dcb | cut -f 1 | uniq`"\t"`if grep --quiet -w $i working/list-frs; then echo yes; fi`"\t"`cut -f1 working/hop-$i | sed -n 1p`"\t"`cut -f1 working/hop-$i | sed -n 2p`"\t"`cut -f1 working/hop-$i | sed -n 3p` >> working/report.tsv ;
 
 done
 
