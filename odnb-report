@@ -1,0 +1,66 @@
+#!/bin/bash
+
+# this is basically a clone of the HoP report script
+# this should be run from within the /scripts directory
+# to update, use
+# curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/odnb-report" > odnb-report
+
+cd ~/scripts
+mkdir -p working
+rm working/*
+
+
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=0" | sed 's/||/\t/g' > working/beacon
+
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1816" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-npg
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1802" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-emlo
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=214" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-viaf
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=213" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-isni
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2015" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-hansard
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2401" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-sdfb
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2745" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-dnzb
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1907" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-audb
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1614" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-hop
+
+# get all the properties we're interested in from the BEACON tool
+
+cut -f 2 working/beacon | grep -v "#" > working/allids
+
+# find all lines in templinks not in liveids, and sort by member name (third col after /)
+
+# now assemble everything for the export file
+
+cut -f 1 working/beacon | sort | uniq | grep -v "#" > working/allitems
+
+echo \# \export of Wikidata to Oxford DNB matches >> working/report.tsv
+echo \# provided on `date` >> working/report.tsv
+echo \# updated daily at http:\/\/www.generalist.org.uk\/wikidata >> working/report.tsv
+echo \# queries to Andrew Gray, andrew@generalist.org.uk >> working/report.tsv
+echo \# >> working/report.tsv
+echo \# `cat working/liveids | wc -l` entries on Wikidata - `cut -f 1 working/beacon | sort | uniq | wc -l` people - `cut -f 1 working/beacon-odnb | sort | uniq | wc -l` ODNB - `cut -f 1 working/beacon-npg | sort | uniq | wc -l` NPG - `cut -f 1 working/beacon-emlo | sort | uniq | wc -l` EMLO - `cut -f 1 working/beacon-sdfb | sort | uniq | wc -l` SDFB - `cut -f 1 working/beacon-viaf | sort | uniq | wc -l` VIAF - `cut -f 1 working/beacon-isni | sort | uniq | wc -l` ISNI - `cut -f 1 working/beacon-hansard | sort | uniq | wc -l` Hansard. >> working/report.tsv
+echo \# >> working/report.tsv
+echo \# For History of Parliament records, note that a single person may have 1-3 seperate HoP entries, depending on the length and timing of their career >> working/report.tsv
+echo \# >> working/report.tsv
+echo \# `cut -b 18- working/links | uniq -d | wc -l` still unmatched with identical titles in different periods >> working/report.tsv
+echo \# >> working/report.tsv
+echo \# >> working/report.tsv
+
+echo -e Wikidata ID"\t"Oxford DNB"\t"National Portrait Gallery"\t"Early Modern Letters Online"\t"Six Degrees of Francis Bacon"\t"VIAF"\t"ISNI"\t"Hansard"\t"HoP-1"\t"HoP-2"\t"HoP-3 >> working/report.tsv
+for i in `cat working/allitems` ;
+do grep -w $i working/beacon >> working/$i
+echo -e $i"\t"`grep -wc $i working/beacon | cut -f 1`"\t"`grep -w $i working/beacon | cut -f 2 | uniq`"\t"`grep -w $i working/beacon-npg | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-emlo | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-sdfb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-viaf | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-isni | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-hansard | cut -f 1 | uniq`"\t"`cut -f2 working/$i | sed -n 1p`"\t"`cut -f2 working/$i | sed -n 2p`"\t"`cut -f2 working/$i | sed -n 3p` >> working/report.tsv ;
+done
+
+# "| uniq" added to stop multiple entries when there are two article matches
+
+# this last bit takes all the HoP entries, dumps them to one file per q-number,
+# and then reads off lines 1,2,3 (and failing that, blank tabs) - this means we
+# can handle entities with multiple values
+
+#cp working/report.tsv ~/public_html/wikidata/odnb-report.tsv
+
+# dump all of this into the public_html directory so as to be readable
+
+# rm working/*
+
+# comment out for now
