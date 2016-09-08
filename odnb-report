@@ -37,11 +37,10 @@ echo \# provided on `date` >> working/report.tsv
 echo \# updated daily at http:\/\/www.generalist.org.uk\/wikidata >> working/report.tsv
 echo \# queries to Andrew Gray, andrew@generalist.org.uk >> working/report.tsv
 echo \# >> working/report.tsv
-echo \# `cat working/liveids | wc -l` entries on Wikidata - `cut -f 1 working/beacon | sort | uniq | wc -l` people - `cut -f 1 working/beacon-odnb | sort | uniq | wc -l` ODNB - `cut -f 1 working/beacon-npg | sort | uniq | wc -l` NPG - `cut -f 1 working/beacon-emlo | sort | uniq | wc -l` EMLO - `cut -f 1 working/beacon-sdfb | sort | uniq | wc -l` SDFB - `cut -f 1 working/beacon-viaf | sort | uniq | wc -l` VIAF - `cut -f 1 working/beacon-isni | sort | uniq | wc -l` ISNI - `cut -f 1 working/beacon-hansard | sort | uniq | wc -l` Hansard. >> working/report.tsv
+echo \# `cat working/allitems | wc -l` entries on Wikidata - `cut -f 1 working/beacon-npg | sort | uniq | wc -l` NPG - `cut -f 1 working/beacon-emlo | sort | uniq | wc -l` EMLO - `cut -f 1 working/beacon-sdfb | sort | uniq | wc -l` SDFB - `cut -f 1 working/beacon-viaf | sort | uniq | wc -l` VIAF - `cut -f 1 working/beacon-isni | sort | uniq | wc -l` ISNI - `cut -f 1 working/beacon-hansard | sort | uniq | wc -l` Hansard. >> working/report.tsv
 echo \# >> working/report.tsv
 echo \# For History of Parliament records, note that a single person may have 1-3 seperate HoP entries, depending on the length and timing of their career >> working/report.tsv
 echo \# >> working/report.tsv
-echo \# `cut -b 18- working/links | uniq -d | wc -l` still unmatched with identical titles in different periods >> working/report.tsv
 echo \# >> working/report.tsv
 echo \# >> working/report.tsv
 
