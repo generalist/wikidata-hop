@@ -1,0 +1,75 @@
+#!/bin/bash
+
+# this is basically a clone of the HoP report script
+# this should be run from within the /scripts directory
+# to update, use
+# curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/sdfb-report" > sdfb-report
+
+cd ~/scripts
+mkdir -p working
+rm working/*
+
+
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=2401&source=0" | sed 's/||/\t/g' > working/beacon
+
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=2401&source=1816" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-npg
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=2401&source=1802" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-emlo
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=2401&source=214" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-viaf
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=2401&source=213" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-isni
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=2401&source=2015" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-hansard
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=2401&source=1415" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-odnb
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=2401&source=1614" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-hop
+
+# get all the properties we're interested in from the BEACON tool
+
+curl "https://petscan.wmflabs.org/?language=en&project=wikipedia&depth=0&categories=&combination=subset&negcats=&ns%5B0%5D=1&larger=&smaller=&minlinks=&maxlinks=&before=&after=&max_age=&show_redirects=both&edits%5Bbots%5D=both&edits%5Banons%5D=both&edits%5Bflagged%5D=both&templates_yes=&templates_any=&templates_no=&outlinks_yes=&outlinks_any=&outlinks_no=&links_to_all=&links_to_any=&links_to_no=&sparql=SELECT%20%3Fitem%20WHERE%20%7B%20%3Fitem%20wdt%3AP166%20wd%3AQ15631401%20.%20%3Fitem%20wdt%3AP1415%20%3Fdummy0%20%7D&manual_list=&manual_list_wiki=&pagepile=&wikidata_source_sites=&common_wiki=auto&source_combination=&wikidata_item=no&wikidata_label_language=&wikidata_prop_item_use=&wpiu=any&sitelinks_yes=&sitelinks_any=&sitelinks_no=&min_sitelink_count=&max_sitelink_count=&format=json&output_compatability=catscan&sortby=none&sortorder=ascending&regexp_filter=&min_redlink_count=1&doit=Do%20it%21&interface_language=en&active_tab=" | sed 's/},/\n/g' | sed 's/title\":\"/\t/g' | sed 's/\",\"touched/\t/g' | cut -f 2  | tail -n +2 > working/list-frs1
+
+curl "https://petscan.wmflabs.org/?language=en&project=wikipedia&depth=0&categories=&combination=subset&negcats=&ns%5B0%5D=1&larger=&smaller=&minlinks=&maxlinks=&before=&after=&max_age=&show_redirects=both&edits%5Bbots%5D=both&edits%5Banons%5D=both&edits%5Bflagged%5D=both&templates_yes=&templates_any=&templates_no=&outlinks_yes=&outlinks_any=&outlinks_no=&links_to_all=&links_to_any=&links_to_no=&sparql=SELECT%20%3Fitem%20WHERE%20%7B%20%3Fitem%20wdt%3AP463%20wd%3AQ123885%20.%20%3Fitem%20wdt%3AP1415%20%3Fdummy0%20%7D&manual_list=&manual_list_wiki=&pagepile=&wikidata_source_sites=&common_wiki=auto&source_combination=&wikidata_item=no&wikidata_label_language=&wikidata_prop_item_use=&wpiu=any&sitelinks_yes=&sitelinks_any=&sitelinks_no=&min_sitelink_count=&max_sitelink_count=&format=json&output_compatability=catscan&sortby=none&sortorder=ascending&regexp_filter=&min_redlink_count=1&doit=Do%20it%21&interface_language=en&active_tab=" | sed 's/},/\n/g' | sed 's/title\":\"/\t/g' | sed 's/\",\"touched/\t/g' | cut -f 2  | tail -n +2 >> working/list-frs1
+
+cat working/list-frs1 | sort | uniq > working/list-frs
+
+# then find all the FRSes, using both P469 and P166 approaches
+
+cut -f 2 working/beacon | grep -v "#" > working/allids
+
+# find all lines in templinks not in liveids, and sort by member name (third col after /)
+
+# now assemble everything for the export file
+
+cut -f 1 working/beacon | sort | uniq | grep -v "#" > working/allitems
+
+echo \# \export of Wikidata to Six Degrees of Francis Bacon matches >> working/report.tsv
+echo \# provided on `date` >> working/report.tsv
+echo \# updated daily at http:\/\/www.generalist.org.uk\/wikidata >> working/report.tsv
+echo \# queries to Andrew Gray, andrew@generalist.org.uk >> working/report.tsv
+echo \# >> working/report.tsv
+echo \# `cat working/allitems | wc -l` entries on Wikidata matching - `cut -f 1 working/beacon-npg | sort | uniq | wc -l` NPG - `cut -f 1 working/beacon-emlo | sort | uniq | wc -l` EMLO - `cut -f 1 working/beacon-odnb | sort | uniq | wc -l` ODNB - `cut -f 1 working/beacon-viaf | sort | uniq | wc -l` VIAF - `cut -f 1 working/beacon-isni | sort | uniq | wc -l` ISNI - `cut -f 1 working/beacon-hansard | sort | uniq | wc -l` Hansard - `cut -f 1 working/beacon-dnzb | sort | uniq | wc -l` DNZB - `cut -f 1 working/beacon-audb | sort | uniq | wc -l` AuDB - `cut -f 1 working/beacon-dcb | sort | uniq | wc -l` DCB. >> working/report.tsv
+echo \# `cat working/list-frs | wc -l` are FRS >> working/report.tsv
+echo \# >> working/report.tsv
+echo \# For History of Parliament records, note that a single person may have 1-3 seperate HoP entries, depending on the length and timing of their career >> working/report.tsv
+echo \# >> working/report.tsv
+echo \# >> working/report.tsv
+echo \# >> working/report.tsv
+
+echo -e Wikidata ID"\t"SDFB"\t"National Portrait Gallery"\t"Early Modern Letters Online"\t"Oxford DNB"\t"VIAF"\t"ISNI"\t"Hansard"\t"FRS"\t"HoP-1"\t"HoP-2"\t"HoP-3 >> working/report.tsv
+for i in `cat working/allitems` ;
+do
+grep -w $i working/beacon-hop >> working/hop-$i ;
+echo -e $i"\t"`grep -w $i working/beacon | cut -f 2 | uniq`"\t"`grep -w $i working/beacon-npg | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-emlo | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-odnb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-viaf | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-isni | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-hansard | cut -f 1 | uniq`"\t"`if grep --quiet -w $i working/list-frs; then echo yes; fi`"\t"`cut -f1 working/hop-$i | sed -n 1p`"\t"`cut -f1 working/hop-$i | sed -n 2p`"\t"`cut -f1 working/hop-$i | sed -n 3p` >> working/report.tsv ;
+
+done
+
+# "| uniq" added to stop multiple entries when there are two article matches
+
+# this last bit takes all the HoP entries, dumps them to one file per q-number,
+# and then reads off lines 1,2,3 (and failing that, blank tabs) - this means we
+# can handle entities with multiple values
+# commented out for now because my god it's hungry - takes ages to run.
+
+cp working/report.tsv ~/public_html/wikidata/sdfb-report.tsv
+
+# dump all of this into the public_html directory so as to be readable
+
+rm working/*
+
+# comment out for now
