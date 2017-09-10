@@ -21,6 +21,8 @@ curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1614&source=0" | se
 cut -f 1 working/beacon | sort | uniq > working/onwiki-qids
 cut -f 2 working/beacon | sort > working/onwiki-slugs
 
+# pull in the list of matched institutions
+
 curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/institutions.tsv" > working/institutions.tsv
 
 # for each member that exists onwiki, extract the 'educated' section
@@ -47,8 +49,9 @@ grep -vf working/rawmatched working/rawnumbers > working/rawunmatched
 # rawunmatched - number that is not matched by a regexp
 
 # an interesting problem to consider - how to avoid, eg, Brasenose matching "privately by... fellow of Brasenose"
-# a good move might be to omit any fragments containing " by " or "privately"
+# a good move might be to omit any fragments containing "privately"
 
+exit
 
 
 ##### proof of concept below
@@ -73,4 +76,3 @@ for i in `cat working/trimmedlist-eton | cut -f 1` ; do echo -e $i"\t"P69"\t"Q19
 # QuickStatements is pretty smart - if the claim exists but has no reference, it will simply add the reference
 # if it exists with a different reference, it will add another one
 # this means we could even cite it to every HOP entry, but that would be overkill, let's leave in the one-only rule :-)
-
