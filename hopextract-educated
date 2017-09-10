@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # script for extracting various metadata from HoP HTML pages and preparing for Wikidata
+# in this case, schools!
 
 # nb this needs them all in a handy directory at eg 1386-1421/member/xyz.html
 
 # uses pup - https://github.com/ericchiang/pup
 
 # refresh with 
-# curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/hopextract" > hopextract
+# curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/hopextract-educated" > hopextract-educated
 
 # tidy up from previous runs
 
@@ -71,7 +72,7 @@ for i in `cat working/list-eton | cut -f 1 | sort | uniq` ; do grep $i working/l
 # now build the QuickStatements line
 # for now, this only uses a simple referenceURL cite
 
-for i in `cat working/trimmedlist-eton | cut -f 1` ; do echo -e $i"\t"P69"\t"Q192088"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"`grep $i working/trimmedlist-eton | cut -f 2`\" >> quickstatements ; done
+for i in `cat working/trimmedlist-eton | cut -f 1` ; do echo -e $i"\t"P69"\t"Q192088"\t"S143"\t"Q7739799"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"`grep $i working/trimmedlist-eton | cut -f 2`\" >> quickstatements ; done
 
 # QuickStatements is pretty smart - if the claim exists but has no reference, it will simply add the reference
 # if it exists with a different reference, it will add another one
