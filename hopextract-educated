@@ -57,22 +57,48 @@ exit
 
 ##### proof of concept below
 
-grep "Eton" working/educated > working/school-eton # Q192088
+for j in `cut -f 1 working/institutions.tsv` ; 
+do
+
+grep $j working/institutions.tsv | cut -f 2 > placename
+QID=`grep $j working/institutions.tsv | cut -f 3`
+
+echo "now doing "`cat placename`
+
+#set the variables; field 2 is the freetext form(s)
+#field 3 is the Wikidata ID
+
+grep "`cat placename`" working/educated >> working/school-$QID
+
+# note that we do >> since there may be many entries for a single place
+# due to variant spellings etc
 
 # now we have a lot of extracted people, we can build an index and upload away
 
-for i in `cat working/school-eton | cut -f 1` ; do grep $i working/beacon >> working/list-eton ; done
+for i in `cat working/school-$QID | cut -f 1` ; do grep $i working/beacon >> working/list-$QID ; done
 
-# list of all Q-ids and corresponding slugs for etonians
+# list of all Q-ids and corresponding slugs for that place
 
 # now find only one for each - the use of tail is to ensure it's the later volume as standard (consistent with other uses)
 
-for i in `cat working/list-eton | cut -f 1 | sort | uniq` ; do grep $i working/list-eton | tail -n 1 >> working/trimmedlist-eton ; done
+for i in `cat working/list-$QID | cut -f 1 | sort | uniq` ; do grep $i working/list-$QID | tail -n 1 >> working/trimmedlist-$QID ; done
 
 # now build the QuickStatements line
 # for now, this only uses a simple referenceURL cite
 
-for i in `cat working/trimmedlist-eton | cut -f 1` ; do echo -e $i"\t"P69"\t"Q192088"\t"S143"\t"Q7739799"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"`grep $i working/trimmedlist-eton | cut -f 2`\" >> quickstatements ; done
+for i in `cat working/trimmedlist-$QID | cut -f 1` ; do echo -e $i"\t"P69"\t"$QID"\t"S143"\t"Q7739799"\t"S854"\t""\"http://www.historyofparliamentonline.org/volume/"`grep $i working/trimmedlist-$QID | cut -f 2`\" >> working/quickstatements ; done
+
+done
+
+# now, interestingly, quickstatements has a lot of duplicate lines
+# probably because of inconsistent formatting across multiple pages
+# so...
+
+sort working/quickstatements | uniq > quickstatements
+
+# and this probably knocks out 60% of them!
+
+
 
 # QuickStatements is pretty smart - if the claim exists but has no reference, it will simply add the reference
 # if it exists with a different reference, it will add another one
