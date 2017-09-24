@@ -64,9 +64,8 @@ echo \# `grep 1715-1754 working/links | wc -l` of `grep 1715-1754 working/templi
 echo \# `grep 1754-1790 working/links | wc -l` of `grep 1754-1790 working/templinks | wc -l` still unmatched from 1754-1790 >> working/report.tsv
 echo \# `grep 1790-1820 working/links | wc -l` of `grep 1790-1820 working/templinks | wc -l` still unmatched from 1790-1820 >> working/report.tsv
 echo \# `grep 1820-1832 working/links | wc -l` of `grep 1820-1832 working/templinks | wc -l` still unmatched from 1820-1832 >> working/report.tsv
-echo \# Overall, `cat working/links | wc -l` of `sort working/templinks | uniq | wc -l` still unmatched >> working/report.tsv
+echo \# Overall, `grep member working/links | wc -l` of `grep member working/templinks | uniq | wc -l` still unmatched >> working/report.tsv
 echo \# >> working/report.tsv
-echo \# `cut -b 18- working/links | uniq -d | wc -l` still unmatched with identical titles in different periods >> working/report.tsv
 echo \# >> working/report.tsv
 echo \# >> working/report.tsv
 
