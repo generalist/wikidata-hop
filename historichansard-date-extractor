@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# extraction script for Historic Hansard
+# exports dates and constituencies for each person
+
+# get the data
+
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=2015&source=0" | sed 's/||/\t/g' | grep -v \# > beacon
+cut -f 2 beacon | sort > names
+
+# for each entry in the hansard db, extract constituencies and dates
+
+for i in `cat names` ; do
+curl -L "http://hansard.millbanksystems.com/people/$i" > people/$i
+sleep 1s
+grep '/constituencies/' people/$i | sed 's/\">/\t/g' | sed 's/\/constituencies\//\t/g' | sed 's/<\/a>/\t/g' | cut -f 2- | sed 's/<\/li>//g' > results/$i
+echo $i
+done
