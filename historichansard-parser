@@ -1,0 +1,120 @@
+#!/bin/bash
+
+rm working/*
+
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=2015&source=0" | sed 's/||/\t/g' | grep -v \# > beacon
+cut -f 2 beacon | sort > names
+
+curl "https://tools.wmflabs.org/mix-n-match/api.php?query=download&catalog=307" | cut -f 1,2,4 | sed 's/^/Q/g' > constlist
+
+# get the constituencies lookup list
+# constituency lookup - https://tools.wmflabs.org/mix-n-match/#/catalog/307
+
+# we have some nested loops here
+# first, do it once per each HH person entry
+# second, do it once for each *line* in that entry
+# third, do it once per parliament
+
+# to do - write a loop to sort these out to do multiple parliaments at a time
+# for the moment, manually enter it for each term
+
+# electionstart - first day of election period
+# electionend - last day of election period
+# (these are the same day after 1910)
+# parlend - date of dissolution
+# parlqid - "Member of XXth Parliament" item
+# electionqid - "United Kingdom general election, XXXX" item
+# parlnum - sequential number of 
+
+electionstart=`date +%s --date="1918-12-14"`
+electionend=`date +%s --date="1918-12-14"`
+parlend=`date +%s --date="1922-10-26"`
+parlqid="Q41582582"
+electionqid="Q3042701"
+parlnum="31"
+
+for i in `ls results` ; do 
+#for i in `cat testnames` ; do 
+
+counter=`cat results/$i | wc -l`
+
+# now we open a loop to do one line per constituency-date pair
+
+for j in `seq 1 $counter` ; do
+
+input1=`sed -n "$j"p results/$i | cut -f 3 | cut -f 1 -d \-`
+
+input2=`sed -n "$j"p results/$i | cut -f 3 | cut -f 2 -d \- | sed 's/?/2010-01-01/'  | sed 's/^ 1/December 31, 1/' `
+
+# this last bit stops any one-year dates - 31 December is entirely wrong of course, but it's something and we can weed it out later.
+
+
+mpstart=`date +%s --date="$input1"`
+mpend=`date +%s --date="$input2"`
+
+# MPstart is starttime of MP period
+# MPend is endtime of MP period
+# cf https://unix.stackexchange.com/questions/236710/how-can-i-check-whether-date1-is-before-date2-in-shell
+# so what can we do with this?
+
+
+memberqid=`grep "$i$" beacon | cut -f 1`
+constituency="`sed -n "$j"p results/$i | cut -f 1`"
+constituencyname="`sed -n "$j"p results/$i | cut -f 2`"
+constqid="`grep -P "\t$constituency\t" constlist | cut -f 1`"
+
+# did they start after our start date
+# and if so, did they start before our end date
+# we're in
+
+if [[ "$mpend" -gt "$electionstart" ]]; then
+  # the MP finished after the day the Parliament started
+  # use this because defeated MPs are shown as finishing on election day
+  # see eg http://hansard.millbanksystems.com/people/mrs-edwina-currie/
+  # it will have problems for anyone who was elected and immediately died
+  # but there's very few of those
+    if [[ "$mpstart" -le "$parlend" ]]; then
+  # *and* they began on or before the day the Parliament ended
+  # I don't imagine anyone ever began the same day a parliament is dissolved, but who knows
+
+  # now we have to write a complicated bit of reporting to get the dates in
+
+  # first, were they elected after (the last) election day?
+    if [[ "$mpstart" -gt "$electionend" ]]; then
+    date -I -d @$mpstart > working/startdate
+    echo "a by-election" > working/starttype
+    echo "P2715\tQ7864918" > working/startid
+    else
+    date -I -d @$electionend > working/startdate
+    echo "the general election" > working/starttype
+    echo "P2715\t"$electionqid > working/startid
+    fi
+# note here that we are defaulting to the *last* day of a multi-day election as being the day of election
+    if [[ "$mpend" -gt "$parlend" ]]; then
+    date -I -d @$parlend > working/enddate
+    echo "at dissolution" > working/endtype
+    echo "\tP1534\tQ741182" > working/endid
+    else
+    date -I -d @$mpend > working/enddate
+    echo "\t" > working/endid
+    fi
+
+    echo "$memberqid - line $j - $i - $constituency; elected in `cat working/starttype` on `cat working/startdate`; left `cat working/endtype` on `cat working/enddate`" >> working/report-$parlnum-$parlqid-verbose
+    echo -e "$memberqid\tP39\t$parlqid\tP768\t$constqid\tP580\t+`cat working/startdate`T00:00:00Z/11\tP582\t+`cat working/enddate`T00:00:00Z/11\t`cat working/startid``cat working/endid`\tS143\tQ19204319" >> working/report-$parlnum-$parlqid-terse
+
+  # if they don't meet either criteria, skip them
+    else
+    echo "no, $i (line $j) was not" >> working/report-$parlnum-$parlqid-fail
+    fi
+  else
+  echo "no, $i (line $j) was not" >> working/report-$parlnum-$parlqid-fail
+fi
+
+done # end the each-line loop
+
+done # end the each-person loop
+
+cp working/report* reports/
+
+# echo -e "$memberqid\tP39\t$parlqid" 
+# this will be useful for assembling the files, but not just yet
