@@ -89,13 +89,13 @@ if [[ "$mpend" -gt "$electionstart" ]]; then
     else
       if [[ "$mpstart" -ge "$electionstart" ]]; then
       date -I -d @$mpstart > working/startdate
-      echo "the general election start date" > working/starttype
+      echo "the general election actual date" > working/starttype
       echo "P2715\t"$electionqid > working/startid
       else
    # lastly, were they elected before the start of the election? if so, then they were probably already a member, so use real election date
         if [[ "$mpstart" -le "$electionstart" ]]; then
         date -I -d @$electionstart > working/startdate
-        echo "the general election actual date" > working/starttype
+        echo "the general election start date" > working/starttype
         echo "P2715\t"$electionqid > working/startid
         fi
       fi
