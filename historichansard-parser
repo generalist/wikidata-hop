@@ -26,12 +26,13 @@ curl "https://tools.wmflabs.org/mix-n-match/api.php?query=download&catalog=307" 
 # electionqid - "United Kingdom general election, XXXX" item
 # parlnum - sequential number of 
 
-electionstart=`date +%s --date="1918-12-14"`
-electionend=`date +%s --date="1918-12-14"`
-parlend=`date +%s --date="1922-10-26"`
-parlqid="Q41582582"
-electionqid="Q3042701"
-parlnum="31"
+electionstart=`date +%s --date="1910-12-03"`
+electionend=`date +%s --date="1910-12-19"`
+parlend=`date +%s --date="1918-11-25"`
+parlqid="Q41582581"
+electionqid="Q3076583"
+parlnum="30"
+
 
 for i in `ls results` ; do 
 #for i in `cat testnames` ; do 
@@ -67,7 +68,6 @@ constqid="`grep -P "\t$constituency\t" constlist | cut -f 1`"
 # and if so, did they start before our end date
 # we're in
 
-
 if [[ "$mpend" -gt "$electionstart" ]]; then
   # the MP finished after the day the Parliament started
   # use this because defeated MPs are shown as finishing on election day
@@ -80,25 +80,27 @@ if [[ "$mpend" -gt "$electionstart" ]]; then
 
   # now we have to write a complicated bit of reporting to get the dates in
 
-  # first, were they elected after (the last) election day?
+  # first, were they elected after the end of the general election? if so, by-election
     if [[ "$mpstart" -gt "$electionend" ]]; then
     date -I -d @$mpstart > working/startdate
     echo "a by-election" > working/starttype
     echo "P2715\tQ7864918" > working/startid
-  # okay, were they elected at a known date during the election period?
+  # second, were they elected after the start of the general election? if so, real date
     else
       if [[ "$mpstart" -ge "$electionstart" ]]; then
-      date -I -d @$electionstart > working/startdate
-      echo "the general election 2" > working/starttype
+      date -I -d @$mpstart > working/startdate
+      echo "the general election start date" > working/starttype
       echo "P2715\t"$electionqid > working/startid
       else
-        if [[ "$mpstart" -le "$electionend" ]]; then
-        date -I -d @$mpstart > working/startdate
-        echo "the general election 1" > working/starttype
+   # lastly, were they elected before the start of the election? if so, then they were probably already a member, so use real election date
+        if [[ "$mpstart" -le "$electionstart" ]]; then
+        date -I -d @$electionstart > working/startdate
+        echo "the general election actual date" > working/starttype
         echo "P2715\t"$electionqid > working/startid
         fi
       fi
     fi
+
 # this tries to have the real date if known, and if not, the first day of the election period as a fallback
     if [[ "$mpend" -gt "$parlend" ]]; then
     date -I -d @$parlend > working/enddate
