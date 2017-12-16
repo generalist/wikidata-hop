@@ -87,14 +87,14 @@ if [[ "$mpend" -gt "$electionstart" ]]; then
     echo "P2715\tQ7864918" > working/startid
   # okay, were they elected at a known date during the election period?
     else
-      if [[ "$mpstart" -le "$electionend" ]]; then
-      date -I -d @$mpstart > working/startdate
-      echo "the general election 1" > working/starttype
+      if [[ "$mpstart" -ge "$electionstart" ]]; then
+      date -I -d @$electionstart > working/startdate
+      echo "the general election 2" > working/starttype
       echo "P2715\t"$electionqid > working/startid
       else
-        if [[ "$mpstart" -ge "$electionstart" ]]; then
-        date -I -d @$electionstart > working/startdate
-        echo "the general election 2" > working/starttype
+        if [[ "$mpstart" -le "$electionend" ]]; then
+        date -I -d @$mpstart > working/startdate
+        echo "the general election 1" > working/starttype
         echo "P2715\t"$electionqid > working/startid
         fi
       fi
