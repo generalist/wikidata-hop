@@ -67,6 +67,7 @@ constqid="`grep -P "\t$constituency\t" constlist | cut -f 1`"
 # and if so, did they start before our end date
 # we're in
 
+
 if [[ "$mpend" -gt "$electionstart" ]]; then
   # the MP finished after the day the Parliament started
   # use this because defeated MPs are shown as finishing on election day
@@ -84,12 +85,21 @@ if [[ "$mpend" -gt "$electionstart" ]]; then
     date -I -d @$mpstart > working/startdate
     echo "a by-election" > working/starttype
     echo "P2715\tQ7864918" > working/startid
+  # okay, were they elected at a known date during the election period?
     else
-    date -I -d @$electionend > working/startdate
-    echo "the general election" > working/starttype
-    echo "P2715\t"$electionqid > working/startid
+      if [[ "$mpstart" -le "$electionend" ]]; then
+      date -I -d @$mpstart > working/startdate
+      echo "the general election 1" > working/starttype
+      echo "P2715\t"$electionqid > working/startid
+      else
+        if [[ "$mpstart" -ge "$electionstart" ]]; then
+        date -I -d @$electionstart > working/startdate
+        echo "the general election 2" > working/starttype
+        echo "P2715\t"$electionqid > working/startid
+        fi
+      fi
     fi
-# note here that we are defaulting to the *last* day of a multi-day election as being the day of election
+# this tries to have the real date if known, and if not, the first day of the election period as a fallback
     if [[ "$mpend" -gt "$parlend" ]]; then
     date -I -d @$parlend > working/enddate
     echo "at dissolution" > working/endtype
