@@ -64,7 +64,7 @@ cut -f 1 odnb-working/beacon | sort | uniq | grep -v "#" > odnb-working/allitems
 
 echo \# \export of Wikidata to Oxford DNB matches >> odnb-working/report.tsv
 echo \# provided on `date` >> odnb-working/report.tsv
-echo \# updated weekly at http:\/\/www.generalist.org.uk\/wikidata >> odnb-working/report.tsv
+echo \# updated occasionally at http:\/\/www.generalist.org.uk\/wikidata >> odnb-working/report.tsv
 echo \# queries to Andrew Gray, andrew@generalist.org.uk >> odnb-working/report.tsv
 echo \# >> odnb-working/report.tsv
 #echo \# `cat odnb-working/allitems | wc -l` entries on Wikidata matching - `cut -f 1 odnb-working/beacon-npg | sort | uniq | wc -l` NPG - `cut -f 1 odnb-working/beacon-emlo | sort | uniq | wc -l` EMLO - `cut -f 1 odnb-working/beacon-sdfb | sort | uniq | wc -l` SDFB - `cut -f 1 odnb-working/beacon-viaf | sort | uniq | wc -l` VIAF - `cut -f 1 odnb-working/beacon-isni | sort | uniq | wc -l` ISNI - `cut -f 1 odnb-working/beacon-hansard | sort | uniq | wc -l` Hansard - `cut -f 1 odnb-working/beacon-dnzb | sort | uniq | wc -l` DNZB - `cut -f 1 odnb-working/beacon-audb | sort | uniq | wc -l` AuDB - `cut -f 1 odnb-working/beacon-dcb | sort | uniq | wc -l` DCB. >> odnb-working/report.tsv # need to extend this with all values
