@@ -6,81 +6,81 @@
 # curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/odnb-report" > odnb-report
 
 cd ~/scripts
-mkdir -p working
-rm working/*
+mkdir -p odnb-working
+rm odnb-working/*
 
 
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=0" | sed 's/||/\t/g' > working/beacon
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=0" | sed 's/||/\t/g' > odnb-working/beacon
 
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1816" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-npg
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1802" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-emlo
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=214" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-viaf
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=213" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-isni
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2015" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-hansard
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2401" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-sdfb
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2745" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-dnzb
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1907" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-audb
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1614" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-hop
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2753" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-dcb
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1816" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-npg
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1802" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-emlo
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=214" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-viaf
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=213" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-isni
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2015" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-hansard
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2401" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-sdfb
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2745" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-dnzb
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1907" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-audb
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1614" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-hop
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2753" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-dcb
 
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=3029" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-tna
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=227" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-gnd
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=244" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-loc
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1599" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-venn
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1430" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-openplaques
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1938" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-gutenberg
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2843" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-benezit
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=3429" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-ee
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=535" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-grave
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1648" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-dwb
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2741" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-tate
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2941" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-munk
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2029" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-ulster
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=3029" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-tna
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=227" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-gnd
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=244" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-loc
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1599" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-venn
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1430" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-openplaques
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1938" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-gutenberg
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2843" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-benezit
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=3429" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-ee
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=535" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-grave
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1648" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-dwb
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2741" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-tate
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2941" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-munk
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2029" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-ulster
 
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=3544" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-tepapa
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=4539" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-biowomen
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=3360" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-nobel
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2944" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-plarr
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=3410" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-cced
-curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1477" | sed 's/|/\t/g' | grep -v "#"  > working/beacon-olympic
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=3544" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-tepapa
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=4539" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-biowomen
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=3360" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-nobel
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=2944" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-plarr
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=3410" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-cced
+curl "http://tools.wmflabs.org/wikidata-todo/beacon.php?prop=1415&source=1477" | sed 's/|/\t/g' | grep -v "#"  > odnb-working/beacon-olympic
 
 # get all the properties we're interested in from the BEACON tool
 
-curl "https://petscan.wmflabs.org/?language=en&project=wikipedia&depth=0&categories=&combination=subset&negcats=&ns%5B0%5D=1&larger=&smaller=&minlinks=&maxlinks=&before=&after=&max_age=&show_redirects=both&edits%5Bbots%5D=both&edits%5Banons%5D=both&edits%5Bflagged%5D=both&templates_yes=&templates_any=&templates_no=&outlinks_yes=&outlinks_any=&outlinks_no=&links_to_all=&links_to_any=&links_to_no=&sparql=SELECT%20%3Fitem%20WHERE%20%7B%20%3Fitem%20wdt%3AP166%20wd%3AQ15631401%20.%20%3Fitem%20wdt%3AP1415%20%3Fdummy0%20%7D&manual_list=&manual_list_wiki=&pagepile=&wikidata_source_sites=&common_wiki=auto&source_combination=&wikidata_item=no&wikidata_label_language=&wikidata_prop_item_use=&wpiu=any&sitelinks_yes=&sitelinks_any=&sitelinks_no=&min_sitelink_count=&max_sitelink_count=&format=json&output_compatability=catscan&sortby=none&sortorder=ascending&regexp_filter=&min_redlink_count=1&doit=Do%20it%21&interface_language=en&active_tab=" | sed 's/},/\n/g' | sed 's/title\":\"/\t/g' | sed 's/\",\"touched/\t/g' | cut -f 2  | tail -n +2 > working/list-frs1
+curl "https://petscan.wmflabs.org/?language=en&project=wikipedia&depth=0&categories=&combination=subset&negcats=&ns%5B0%5D=1&larger=&smaller=&minlinks=&maxlinks=&before=&after=&max_age=&show_redirects=both&edits%5Bbots%5D=both&edits%5Banons%5D=both&edits%5Bflagged%5D=both&templates_yes=&templates_any=&templates_no=&outlinks_yes=&outlinks_any=&outlinks_no=&links_to_all=&links_to_any=&links_to_no=&sparql=SELECT%20%3Fitem%20WHERE%20%7B%20%3Fitem%20wdt%3AP166%20wd%3AQ15631401%20.%20%3Fitem%20wdt%3AP1415%20%3Fdummy0%20%7D&manual_list=&manual_list_wiki=&pagepile=&wikidata_source_sites=&common_wiki=auto&source_combination=&wikidata_item=no&wikidata_label_language=&wikidata_prop_item_use=&wpiu=any&sitelinks_yes=&sitelinks_any=&sitelinks_no=&min_sitelink_count=&max_sitelink_count=&format=json&output_compatability=catscan&sortby=none&sortorder=ascending&regexp_filter=&min_redlink_count=1&doit=Do%20it%21&interface_language=en&active_tab=" | sed 's/},/\n/g' | sed 's/title\":\"/\t/g' | sed 's/\",\"touched/\t/g' | cut -f 2  | tail -n +2 > odnb-working/list-frs1
 
-curl "https://petscan.wmflabs.org/?language=en&project=wikipedia&depth=0&categories=&combination=subset&negcats=&ns%5B0%5D=1&larger=&smaller=&minlinks=&maxlinks=&before=&after=&max_age=&show_redirects=both&edits%5Bbots%5D=both&edits%5Banons%5D=both&edits%5Bflagged%5D=both&templates_yes=&templates_any=&templates_no=&outlinks_yes=&outlinks_any=&outlinks_no=&links_to_all=&links_to_any=&links_to_no=&sparql=SELECT%20%3Fitem%20WHERE%20%7B%20%3Fitem%20wdt%3AP463%20wd%3AQ123885%20.%20%3Fitem%20wdt%3AP1415%20%3Fdummy0%20%7D&manual_list=&manual_list_wiki=&pagepile=&wikidata_source_sites=&common_wiki=auto&source_combination=&wikidata_item=no&wikidata_label_language=&wikidata_prop_item_use=&wpiu=any&sitelinks_yes=&sitelinks_any=&sitelinks_no=&min_sitelink_count=&max_sitelink_count=&format=json&output_compatability=catscan&sortby=none&sortorder=ascending&regexp_filter=&min_redlink_count=1&doit=Do%20it%21&interface_language=en&active_tab=" | sed 's/},/\n/g' | sed 's/title\":\"/\t/g' | sed 's/\",\"touched/\t/g' | cut -f 2  | tail -n +2 >> working/list-frs1
+curl "https://petscan.wmflabs.org/?language=en&project=wikipedia&depth=0&categories=&combination=subset&negcats=&ns%5B0%5D=1&larger=&smaller=&minlinks=&maxlinks=&before=&after=&max_age=&show_redirects=both&edits%5Bbots%5D=both&edits%5Banons%5D=both&edits%5Bflagged%5D=both&templates_yes=&templates_any=&templates_no=&outlinks_yes=&outlinks_any=&outlinks_no=&links_to_all=&links_to_any=&links_to_no=&sparql=SELECT%20%3Fitem%20WHERE%20%7B%20%3Fitem%20wdt%3AP463%20wd%3AQ123885%20.%20%3Fitem%20wdt%3AP1415%20%3Fdummy0%20%7D&manual_list=&manual_list_wiki=&pagepile=&wikidata_source_sites=&common_wiki=auto&source_combination=&wikidata_item=no&wikidata_label_language=&wikidata_prop_item_use=&wpiu=any&sitelinks_yes=&sitelinks_any=&sitelinks_no=&min_sitelink_count=&max_sitelink_count=&format=json&output_compatability=catscan&sortby=none&sortorder=ascending&regexp_filter=&min_redlink_count=1&doit=Do%20it%21&interface_language=en&active_tab=" | sed 's/},/\n/g' | sed 's/title\":\"/\t/g' | sed 's/\",\"touched/\t/g' | cut -f 2  | tail -n +2 >> odnb-working/list-frs1
 
-cat working/list-frs1 | sort | uniq > working/list-frs
+cat odnb-working/list-frs1 | sort | uniq > odnb-working/list-frs
 
 # then find all the FRSes, using both P469 and P166 approaches
 
-cut -f 2 working/beacon | grep -v "#" > working/allids
+cut -f 2 odnb-working/beacon | grep -v "#" > odnb-working/allids
 
 # find all lines in templinks not in liveids, and sort by member name (third col after /)
 
 # now assemble everything for the export file
 
-cut -f 1 working/beacon | sort | uniq | grep -v "#" > working/allitems
+cut -f 1 odnb-working/beacon | sort | uniq | grep -v "#" > odnb-working/allitems
 
-echo \# \export of Wikidata to Oxford DNB matches >> working/report.tsv
-echo \# provided on `date` >> working/report.tsv
-echo \# updated weekly at http:\/\/www.generalist.org.uk\/wikidata >> working/report.tsv
-echo \# queries to Andrew Gray, andrew@generalist.org.uk >> working/report.tsv
-echo \# >> working/report.tsv
-#echo \# `cat working/allitems | wc -l` entries on Wikidata matching - `cut -f 1 working/beacon-npg | sort | uniq | wc -l` NPG - `cut -f 1 working/beacon-emlo | sort | uniq | wc -l` EMLO - `cut -f 1 working/beacon-sdfb | sort | uniq | wc -l` SDFB - `cut -f 1 working/beacon-viaf | sort | uniq | wc -l` VIAF - `cut -f 1 working/beacon-isni | sort | uniq | wc -l` ISNI - `cut -f 1 working/beacon-hansard | sort | uniq | wc -l` Hansard - `cut -f 1 working/beacon-dnzb | sort | uniq | wc -l` DNZB - `cut -f 1 working/beacon-audb | sort | uniq | wc -l` AuDB - `cut -f 1 working/beacon-dcb | sort | uniq | wc -l` DCB. >> working/report.tsv # need to extend this with all values
-#echo \# `cat working/list-frs | wc -l` are FRS >> working/report.tsv
-echo \# >> working/report.tsv
-echo \# For History of Parliament records, note that a single person may have 1-3 seperate HoP entries, depending on the length and timing of their career >> working/report.tsv
-echo \# >> working/report.tsv
-echo \# >> working/report.tsv
-echo \# >> working/report.tsv
+echo \# \export of Wikidata to Oxford DNB matches >> odnb-working/report.tsv
+echo \# provided on `date` >> odnb-working/report.tsv
+echo \# updated weekly at http:\/\/www.generalist.org.uk\/wikidata >> odnb-working/report.tsv
+echo \# queries to Andrew Gray, andrew@generalist.org.uk >> odnb-working/report.tsv
+echo \# >> odnb-working/report.tsv
+#echo \# `cat odnb-working/allitems | wc -l` entries on Wikidata matching - `cut -f 1 odnb-working/beacon-npg | sort | uniq | wc -l` NPG - `cut -f 1 odnb-working/beacon-emlo | sort | uniq | wc -l` EMLO - `cut -f 1 odnb-working/beacon-sdfb | sort | uniq | wc -l` SDFB - `cut -f 1 odnb-working/beacon-viaf | sort | uniq | wc -l` VIAF - `cut -f 1 odnb-working/beacon-isni | sort | uniq | wc -l` ISNI - `cut -f 1 odnb-working/beacon-hansard | sort | uniq | wc -l` Hansard - `cut -f 1 odnb-working/beacon-dnzb | sort | uniq | wc -l` DNZB - `cut -f 1 odnb-working/beacon-audb | sort | uniq | wc -l` AuDB - `cut -f 1 odnb-working/beacon-dcb | sort | uniq | wc -l` DCB. >> odnb-working/report.tsv # need to extend this with all values
+#echo \# `cat odnb-working/list-frs | wc -l` are FRS >> odnb-working/report.tsv
+echo \# >> odnb-working/report.tsv
+echo \# For History of Parliament records, note that a single person may have 1-3 seperate HoP entries, depending on the length and timing of their career >> odnb-working/report.tsv
+echo \# >> odnb-working/report.tsv
+echo \# >> odnb-working/report.tsv
+echo \# >> odnb-working/report.tsv
 
-echo -e Wikidata ID"\t"Oxford DNB"\t"National Portrait Gallery"\t"Early Modern Letters Online"\t"Six Degrees of Francis Bacon"\t"VIAF"\t"ISNI"\t"Hansard"\t"Dictionary of NZ Biography"\t"Australian Dictionary of Biography"\t"Dictionary of Canadian Biography"\t"FRS"\t"HoP-1"\t"HoP-2"\t"HoP-3"\t"UK National Archives"\t"GND"\t"Library of Congress"\t"Cambridge Alumni"\t"OpenPlaques"\t"Project Gutenberg"\t"Benezit"\t"Electronic Enlightenment"\t"Find a Grave"\t"Kindred Britain"\t"Dictionary of Welsh Biography"\t"Tate"\t"Munks Roll"\t"Dictionary of Ulster Biography"\t"Te Papa"\t"Collective Biographies of Women"\t"Nobel Prize"\t"Plarr"\t"Clergy of the Church of England"\t"Sports-Reference.com Olympic athletes >> working/report.tsv
+echo -e Wikidata ID"\t"Oxford DNB"\t"National Portrait Gallery"\t"Early Modern Letters Online"\t"Six Degrees of Francis Bacon"\t"VIAF"\t"ISNI"\t"Hansard"\t"Dictionary of NZ Biography"\t"Australian Dictionary of Biography"\t"Dictionary of Canadian Biography"\t"FRS"\t"HoP-1"\t"HoP-2"\t"HoP-3"\t"UK National Archives"\t"GND"\t"Library of Congress"\t"Cambridge Alumni"\t"OpenPlaques"\t"Project Gutenberg"\t"Benezit"\t"Electronic Enlightenment"\t"Find a Grave"\t"Kindred Britain"\t"Dictionary of Welsh Biography"\t"Tate"\t"Munks Roll"\t"Dictionary of Ulster Biography"\t"Te Papa"\t"Collective Biographies of Women"\t"Nobel Prize"\t"Plarr"\t"Clergy of the Church of England"\t"Sports-Reference.com Olympic athletes >> odnb-working/report.tsv
 
-for i in `cat working/allitems` ;
+for i in `cat odnb-working/allitems` ;
 do
-grep -w $i working/beacon-hop >> working/hop-$i ;
-echo -e $i"\t"`grep -w $i working/beacon | cut -f 2 | uniq`"\t"`grep -w $i working/beacon-npg | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-emlo | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-sdfb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-viaf | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-isni | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-hansard | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-dnzb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-audb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-dcb | cut -f 1 | uniq`"\t"`if grep --quiet -w $i working/list-frs; then echo yes; fi`"\t"`cut -f1 working/hop-$i | sed -n 1p`"\t"`cut -f1 working/hop-$i | sed -n 2p`"\t"`cut -f1 working/hop-$i | sed -n 3p`"\t"`grep -w $i working/beacon-tna | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-gnd | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-loc | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-venn | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-openplaques | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-gutenberg | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-benezit | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-ee | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-grave | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-dwb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-tate | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-munk | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-ulster | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-tepapa | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-biowomen | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-nobel | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-plarr | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-cced | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-olympic | cut -f 1 | uniq` >> working/report.tsv ;
+grep -w $i odnb-working/beacon-hop >> odnb-working/hop-$i ;
+echo -e $i"\t"`grep -w $i odnb-working/beacon | cut -f 2 | uniq`"\t"`grep -w $i odnb-working/beacon-npg | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-emlo | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-sdfb | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-viaf | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-isni | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-hansard | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-dnzb | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-audb | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-dcb | cut -f 1 | uniq`"\t"`if grep --quiet -w $i odnb-working/list-frs; then echo yes; fi`"\t"`cut -f1 odnb-working/hop-$i | sed -n 1p`"\t"`cut -f1 odnb-working/hop-$i | sed -n 2p`"\t"`cut -f1 odnb-working/hop-$i | sed -n 3p`"\t"`grep -w $i odnb-working/beacon-tna | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-gnd | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-loc | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-venn | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-openplaques | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-gutenberg | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-benezit | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-ee | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-grave | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-dwb | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-tate | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-munk | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-ulster | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-tepapa | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-biowomen | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-nobel | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-plarr | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-cced | cut -f 1 | uniq`"\t"`grep -w $i odnb-working/beacon-olympic | cut -f 1 | uniq` >> odnb-working/report.tsv ;
 done
 
 # "| uniq" added to stop multiple entries when there are two article matches
@@ -89,11 +89,11 @@ done
 # and then reads off lines 1,2,3 (and failing that, blank tabs) - this means we
 # can handle entities with multiple values
 
-cp working/report.tsv ~/public_html/wikidata/odnb-report.tsv
+cp odnb-working/report.tsv ~/public_html/wikidata/odnb-report.tsv
 
 # dump all of this into the public_html directory so as to be readable
 
-rm working/*
+rm odnb-working/*
 
 # update for next time
 
