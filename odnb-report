@@ -5,10 +5,6 @@
 # to update, use
 # curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/odnb-report" > odnb-report
 
-# so, first of all, make it self-update every time it's run
-
-curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/odnb-report" > odnb-report
-
 cd ~/scripts
 mkdir -p working
 rm working/*
@@ -79,12 +75,12 @@ echo \# >> working/report.tsv
 echo \# >> working/report.tsv
 echo \# >> working/report.tsv
 
-echo -e Wikidata ID"\t"Oxford DNB"\t"National Portrait Gallery"\t"Early Modern Letters Online"\t"Six Degrees of Francis Bacon"\t"VIAF"\t"ISNI"\t"Hansard"\t"Dictionary of NZ Biography"\t"Australian Dictionary of Biography"\t"Dictionary of Canadian Biography"\t"FRS"\t"HoP-1"\t"HoP-2"\t"HoP-3"\t"UK National Archives"\t"GND"\t"Library of Congress"\t"Cambridge Alumni"\t"OpenPlaques"\t"Project Gutenberg"\t"Benezit"\t"Electronic Enlightenment"\t"Find a Grave"\t"Kindred Britain"\t"Dictionary of Welsh Biography"\t"Tate"\t"Munk's Roll"\t"Dictionary of Ulster Biography"\t"Te Papa"\t"Collective Biographies of Women"\t"Nobel Prize"\t"Plarr"\t"Clergy of the Church of England"\t"Sports-Reference.com Olympic athletes >> working/report.tsv
+echo -e Wikidata ID"\t"Oxford DNB"\t"National Portrait Gallery"\t"Early Modern Letters Online"\t"Six Degrees of Francis Bacon"\t"VIAF"\t"ISNI"\t"Hansard"\t"Dictionary of NZ Biography"\t"Australian Dictionary of Biography"\t"Dictionary of Canadian Biography"\t"FRS"\t"HoP-1"\t"HoP-2"\t"HoP-3"\t"UK National Archives"\t"GND"\t"Library of Congress"\t"Cambridge Alumni"\t"OpenPlaques"\t"Project Gutenberg"\t"Benezit"\t"Electronic Enlightenment"\t"Find a Grave"\t"Kindred Britain"\t"Dictionary of Welsh Biography"\t"Tate"\t"Munks Roll"\t"Dictionary of Ulster Biography"\t"Te Papa"\t"Collective Biographies of Women"\t"Nobel Prize"\t"Plarr"\t"Clergy of the Church of England"\t"Sports-Reference.com Olympic athletes >> working/report.tsv
+
 for i in `cat working/allitems` ;
 do
 grep -w $i working/beacon-hop >> working/hop-$i ;
 echo -e $i"\t"`grep -w $i working/beacon | cut -f 2 | uniq`"\t"`grep -w $i working/beacon-npg | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-emlo | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-sdfb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-viaf | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-isni | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-hansard | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-dnzb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-audb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-dcb | cut -f 1 | uniq`"\t"`if grep --quiet -w $i working/list-frs; then echo yes; fi`"\t"`cut -f1 working/hop-$i | sed -n 1p`"\t"`cut -f1 working/hop-$i | sed -n 2p`"\t"`cut -f1 working/hop-$i | sed -n 3p`"\t"`grep -w $i working/beacon-tna | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-gnd | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-loc | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-venn | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-openplaques | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-gutenberg | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-benezit | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-ee | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-grave | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-dwb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-tate | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-munk | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-adb | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-ulster | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-tepapa | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-biowomen | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-nobel | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-plarr | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-cced | cut -f 1 | uniq`"\t"`grep -w $i working/beacon-olympic | cut -f 1 | uniq` >> working/report.tsv ;
-
 done
 
 # "| uniq" added to stop multiple entries when there are two article matches
@@ -92,7 +88,6 @@ done
 # the HoP bit takes all the HoP entries, dumps them to one file per q-number,
 # and then reads off lines 1,2,3 (and failing that, blank tabs) - this means we
 # can handle entities with multiple values
-# commented out for now because my god it's hungry - takes ages to run.
 
 cp working/report.tsv ~/public_html/wikidata/odnb-report.tsv
 
@@ -100,4 +95,6 @@ cp working/report.tsv ~/public_html/wikidata/odnb-report.tsv
 
 rm working/*
 
-# comment out for now
+# update for next time
+
+curl "https://raw.githubusercontent.com/generalist/wikidata-hop/master/odnb-report" > odnb-report
