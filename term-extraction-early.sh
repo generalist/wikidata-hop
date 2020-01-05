@@ -3,6 +3,7 @@
 # get all the dates & constituencies for a period
 # will ONLY work at the moment for early vols (ie one line per parliament)
 # will need to write a newer one for later vols
+# nb needs PUP - https://github.com/ericchiang/pup
 
 rm working/*-names
 
@@ -18,7 +19,7 @@ for i in `ls $a/member | sed 's/.html//g'` ;
 do 
 clean=`echo $i | sed 's/%28/(/g' | sed 's/%29/)/g'`
 # set tidied name as variable
-cat $a/member/$i.html | ./pup '#member-constituency text{}' | tr '\n' '\t' | sed -E 's/(\t[A-Z][A-Z])/\n\1/g' | sed -E 's/(\t\?[A-Z])/\n\1/g' | sed 's/^\t//g' | sed 's/\t /\t/g' | sed 's/ /_/g' | sed 's/\t_/_/g' |  sed 's/__/_/g' | sed 's/\[_/\[/g' | sed 's/\?_/\?/g' | sed 's/\t[0-9]\t/\t/g' | sed 's/\t$//g' | sed 's/&#39;//g' | grep -v "Constituency" > dates/$a/$clean ; done
+cat $a/member/$i.html | pup '#member-constituency text{}' | tr '\n' '\t' | sed -E 's/(\t[A-Z][A-Z])/\n\1/g' | sed -E 's/(\t\?[A-Z])/\n\1/g' | sed 's/^\t//g' | sed 's/\t /\t/g' | sed 's/ /_/g' | sed 's/\t_/_/g' |  sed 's/__/_/g' | sed 's/\[_/\[/g' | sed 's/\?_/\?/g' | sed 's/\t[0-9]\t/\t/g' | sed 's/\t$//g' | sed 's/&#39;//g' | grep -v "Constituency" > dates/$a/$clean ; done
 
 # this also deals with spaces (eg Mar. 1414) by underscoring
 # and drops those annoying trailing htmls
