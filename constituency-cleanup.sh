@@ -16,7 +16,10 @@ curl --header "Accept: text/tab-separated-values" https://query.wikidata.org/spa
 
 # this is a variant of https://w.wiki/ZFD and may be worth running that beforehand to check all the results look OK. https://w.wiki/ZEr is useful for where the names are not the same - this is the commented-out form
 
-#
+# to generalise this, replace it with a different query
+# the first column should be the CLAIM ID, the second column the BAD VALUE
+# you will also need to go down to the jq line and change P768 to whatever qualifier is the problem
+# for some reason this didn't like being set up as a variable, sorry
 
 cut -f 1 query.tsv | cut -d \/ -f 6 | sed 's/>//g' | sed 's/\(Q[0-9]*\)-/\1\$/g' > scratch1
 cut -f 2 query.tsv | cut -d \/ -f 5 | sed 's/>//g' > scratch2
@@ -39,6 +42,8 @@ for j in `seq 1 $counter` ; do
 statement=`sed -n "$j"p scratchlist | cut -f 1`
 wrongseat=`sed -n "$j"p scratchlist | cut -f 2`
 hash=`wd data --simplify --keep qualifiers,hashes $statement | jq '.qualifiers.P768' | grep -B 1 -A 2 $wrongseat | jq .hash | sed 's/\"//g'`
+
+# this is the JQ line you'll need to fix if you're changing the qualifier
 
 echo -e $statement"\t"$wrongseat"\t"$hash >> scratchreport
 done
