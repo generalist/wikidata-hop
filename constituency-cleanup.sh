@@ -2,14 +2,17 @@
 # and clean up mistaken constituencies
 # "there are two constituencies, which are identified as the same"
 # "find the one that looks wrong and remove it"
+# requires wd-cli and jq to be installed
 
 
 v=`echo 1820-1832`
 
+# set volume
+
 rm scratch*
 
 
-curl --header "Accept: text/tab-separated-values" https://query.wikidata.org/sparql?query=SELECT%20DISTINCT%20%3FpositionStatement%20%3Fwrong_seat%0AWHERE%20%7B%0A%20%3Fitem%20p%3AP39%20%3FpositionStatement%20.%20%0A%20%3FpositionStatement%20ps%3AP39%20%3Fterm%20.%20%0A%20%7B%20%3Fterm%20wdt%3AP279%20wd%3AQ16707842%20%7D%20union%20%7B%20%3Fterm%20wdt%3AP279%20wd%3AQ18015642%20%7D%20%0A%20%3FpositionStatement%20pq%3AP768%20%3Fright_seat%20.%20%3FpositionStatement%20pq%3AP768%20%3Fwrong_seat%20.%20%0A%20filter%20%28%20%3Fright_seat%20%21%3D%20%3Fwrong_seat%20%29%20.%0A%20%20%23%20wrong%20seat%20starts%20after%20the%20term%20ends%0A%20%20%7B%20%3Fterm%20wdt%3AP576%20%3Fte%20.%20%3Fwrong_seat%20wdt%3AP571%20%3Fws_start%20.%20filter%20%28%3Fws_start%20%3E%20%3Fte%29%20%7D%0A%20%3Fright_seat%20wdt%3AP1889%20%3Fwrong_seat%20.%0A%20%3Fright_seat%20rdfs%3Alabel%20%3Fname%20.%20%3Fwrong_seat%20rdfs%3Alabel%20%3Fname%20.%20filter%20%28lang%28%3Fname%29%20%3D%20%22en%22%29%20%0A%20%3FpositionStatement%20prov%3AwasDerivedFrom%20%3Fref%20.%20%3Fref%20pr%3AP1614%20%3Frefhop%20.%0A%20%3Fref%20pr%3AP248%20wd%3AQ7739799%20.%20filter%20%28%3Frefhop%20%3D%20%3Fhop%20%29%20.%0A%20%3Fitem%20wdt%3AP1614%20%3Fhop%20.%20FILTER%28STRSTARTS%28%3Fhop%2C%20%221820-1832%22%29%29.%0A%7D%20order%20by%20desc%28%3Fte%29 > query.tsv
+curl --header "Accept: text/tab-separated-values" https://query.wikidata.org/sparql?query=SELECT%20DISTINCT%20%3FpositionStatement%20%3Fwrong_seat%0AWHERE%20%7B%0A%20%3Fitem%20p%3AP39%20%3FpositionStatement%20.%20%0A%20%3FpositionStatement%20ps%3AP39%20%3Fterm%20.%20%0A%20%7B%20%3Fterm%20wdt%3AP279%20wd%3AQ16707842%20%7D%20union%20%7B%20%3Fterm%20wdt%3AP279%20wd%3AQ18015642%20%7D%20%0A%20%3FpositionStatement%20pq%3AP768%20%3Fright_seat%20.%20%3FpositionStatement%20pq%3AP768%20%3Fwrong_seat%20.%20%0A%20filter%20%28%20%3Fright_seat%20%21%3D%20%3Fwrong_seat%20%29%20.%0A%20%20%23%20wrong%20seat%20starts%20after%20the%20term%20ends%0A%20%20%7B%20%3Fterm%20wdt%3AP576%20%3Fte%20.%20%3Fwrong_seat%20wdt%3AP571%20%3Fws_start%20.%20filter%20%28%3Fws_start%20%3E%20%3Fte%29%20%7D%0A%20%3Fright_seat%20wdt%3AP1889%20%3Fwrong_seat%20.%0A%20%3Fright_seat%20rdfs%3Alabel%20%3Fname%20.%20%3Fwrong_seat%20rdfs%3Alabel%20%3Fname%20.%20filter%20%28lang%28%3Fname%29%20%3D%20%22en%22%29%20%0A%20%3FpositionStatement%20prov%3AwasDerivedFrom%20%3Fref%20.%20%3Fref%20pr%3AP1614%20%3Frefhop%20.%0A%20%3Fref%20pr%3AP248%20wd%3AQ7739799%20.%20filter%20%28%3Frefhop%20%3D%20%3Fhop%20%29%20.%0A%20%3Fitem%20wdt%3AP1614%20%3Fhop%20.%20FILTER%28STRSTARTS%28%3Fhop%2C%20%22$v%22%29%29.%0A%7D%20order%20by%20desc%28%3Fte%29 > query.tsv
 
 # curl --header "Accept: text/tab-separated-values" https://query.wikidata.org/sparql?query=SELECT%20DISTINCT%20%3FpositionStatement%20%3Fwrong_seat%0AWHERE%20%7B%0A%20%3Fitem%20p%3AP39%20%3FpositionStatement%20.%20%0A%20%3FpositionStatement%20ps%3AP39%20%3Fterm%20.%20%0A%20%7B%20%3Fterm%20wdt%3AP279%20wd%3AQ16707842%20%7D%20union%20%7B%20%3Fterm%20wdt%3AP279%20wd%3AQ18015642%20%7D%20%0A%20%3FpositionStatement%20pq%3AP768%20%3Fright_seat%20.%20%3FpositionStatement%20pq%3AP768%20%3Fwrong_seat%20.%20%0A%20filter%20%28%20%3Fright_seat%20%21%3D%20%3Fwrong_seat%20%29%20.%0A%20%20%23%20wrong%20seat%20starts%20after%20the%20term%20ends%0A%20%20%7B%20%3Fterm%20wdt%3AP576%20%3Fte%20.%20%3Fwrong_seat%20wdt%3AP571%20%3Fws_start%20.%20filter%20%28%3Fws_start%20%3E%20%3Fte%29%20%7D%0A%20%3Fright_seat%20wdt%3AP1889%20%3Fwrong_seat%20.%0A%20%3FpositionStatement%20prov%3AwasDerivedFrom%20%3Fref%20.%20%3Fref%20pr%3AP1614%20%3Frefhop%20.%0A%20%3Fref%20pr%3AP248%20wd%3AQ7739799%20.%20filter%20%28%3Frefhop%20%3D%20%3Fhop%20%29%20.%0A%20%3Fitem%20wdt%3AP1614%20%3Fhop%20.%20FILTER%28STRSTARTS%28%3Fhop%2C%20%22$v%22%29%29.%0A%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%20wikibase%3Alanguage%20%27en%27%20%7D%0A%7D%20order%20by%20desc%28%3Fte%29 > query.tsv
 
@@ -55,5 +58,6 @@ done
 
 echo -e "' | wd rq --batch -s \"constituency cleanup\"" >> scratchupload
 
+bash scratchupload
 
 
