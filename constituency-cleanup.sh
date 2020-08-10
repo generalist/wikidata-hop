@@ -1,13 +1,11 @@
 # this script is designed to find P39 statements following a HoP upload
 # and clean up mistaken constituencies
 # "there are two constituencies, which are identified as the same"
+# same = P1889 link, and same label (this leaves a few to do by
 # "find the one that looks wrong and remove it"
-# requires wd-cli and jq to be installed
 
 
 v=`echo 1820-1832`
-
-# set volume
 
 rm scratch*
 
@@ -58,6 +56,6 @@ done
 
 echo -e "' | wd rq --batch -s \"constituency cleanup\"" >> scratchupload
 
+# and now upload everything
+
 bash scratchupload
-
-
