@@ -18,6 +18,7 @@ curl --header "Accept: text/tab-separated-values" https://query.wikidata.org/spa
 
 # to generalise this, replace it with a different query
 # the first column should be the CLAIM ID, the second column the BAD VALUE
+# parser may need tweaked if your values are anything other than Q-items.
 # you will also need to go down to the jq line and change P768 to whatever qualifier is the problem
 # for some reason this didn't like being set up as a variable, sorry
 
